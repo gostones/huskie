@@ -1,0 +1,12 @@
+---
+applications:
+- name: huskie
+  memory: 64M
+  disk_quota: 2G
+  instances: 1
+  command: bash server.sh
+  buildpack: https://github.com/cloudfoundry/binary-buildpack.git
+  env:
+    HUSKIE_BIND: ":2022"
+##
+

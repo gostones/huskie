@@ -11,8 +11,11 @@ import (
 	"bytes"
 	"strings"
 	"time"
+	"github.com/gostones/huskie/rp"
+	"github.com/gostones/huskie/docker"
 )
 
+//
 var help = `
   Usage: chisel [command] [--help]
 
@@ -23,6 +26,23 @@ var help = `
   Read more:
     https://github.com/jpillora/chisel
 
+`
+//
+var rps = `
+[common]
+bind_port = %v
+`
+//
+var rpc = `
+[common]
+server_addr = 127.0.0.1
+server_port = %v
+
+[ssh]
+type = tcp
+local_ip = 127.0.0.1
+local_port = %v
+remote_port = %v
 `
 
 func main() {
@@ -43,23 +63,56 @@ func main() {
 
 	huskiePort := os.Getenv("HUSKIE_PORT")
 
+	serverPort := 7000
+	remotePort := 6000
+
+ 	//
 	switch subcmd {
-	case "server":
+	case "harness":
 		go chat.Server([]string{"--bind", ":" + huskiePort, "--identity", os.Getenv("HUSKIE_IDENTITY")})
+		go rp.Server(fmt.Sprintf(rps, serverPort))
+		
 		tunnel.TunServer(args)
-	case "client":
-		freePort := freePort()
-		user := fmt.Sprintf("u_%v_%v", strings.Replace(macAddr(), ":", "", -1), freePort)
-		fmt.Fprintf(os.Stdout, "port: %v user: %v\n", freePort, user)
+	case "mush":
+		port := freePort()
+		fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, remotePort)
 
-		tun := fmt.Sprintf("localhost:%v:localhost:%v", freePort, huskiePort)
-
-		args = append(args, tun)
-		fmt.Fprintf(os.Stdout, "args: %v\n", args)
-
-		go tunnel.TunClient(args)
+		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, remotePort)))
+		//
 		for i := 0;;i++ {
-			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", freePort), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
+			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), "ubuntu@localhost"})
+			if rc == 0 {
+				os.Exit(0)
+			}
+			secs := time.Duration((i % 10) * (i % 10)) * time.Second
+			fmt.Fprintf(os.Stdout, "rc: %v sleeping %v\n", rc, secs)
+
+			time.Sleep(secs)
+		}
+	case "dog":
+		port := freePort()
+		servicePort := freePort()
+		fmt.Fprintf(os.Stdout, "local: %v remote: %v service: %v\n", port, remotePort, servicePort)
+
+		go docker.Server([]string{"ssh2docker", "--bind", fmt.Sprintf(":%v", servicePort)})
+		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, serverPort)))
+
+		for i := 0;;i++ {
+			rc := rp.Client(fmt.Sprintf(rpc, port, servicePort, remotePort))
+			secs := time.Duration((i % 10) * (i % 10)) * time.Second
+			fmt.Fprintf(os.Stdout, "rc: %v sleeping %v\n", rc, secs)
+
+			time.Sleep(secs)
+		}
+	case "whistle":
+		port := freePort()
+		user := fmt.Sprintf("u_%v_%v", strings.Replace(macAddr(), ":", "", -1), port)
+		fmt.Fprintf(os.Stdout, "local: %v user: %v\n", port, user)
+
+		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, huskiePort)))
+		//
+		for i := 0;;i++ {
+			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
 
 			secs := time.Duration((i % 10) * (i % 10)) * time.Second
 			fmt.Fprintf(os.Stdout, "rc: %v sleeping %v\n", rc, secs)

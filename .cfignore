@@ -19,4 +19,4 @@ vendor
 #
 
 #we need the following files to be included
-!server.sh
+!harness.sh

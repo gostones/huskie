@@ -23,7 +23,7 @@ env
 ##
 ssh-keygen -f host_key -P ''
 
-huskie server
+huskie harness
 
 echo "Server stopped"
 ##

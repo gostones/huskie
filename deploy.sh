@@ -1,34 +1,19 @@
 #!/usr/bin/env bash
 
 #args:
-# CF_SPACE
 
 #DRY_RUN=echo
 
-#
-usage() {
-   cat << EOF
-
-usage: $(basename $0) CF_SPACE
-
-EOF
-
-exit 1
-}
-
-[[ $# -lt 1 ]] && usage
-
-#
-export CF_SPACE=$1
+name=$1
+[[ $# -lt 1 ]] && name="huskie"
 
 ##
 function deploy() {
     local domain="run.aws-usw02-pr.ice.predix.io"
-    local name="huskie-${CF_SPACE}"
 
     echo "Pushing service $domain $name ..."
 
-    $DRY_RUN cf delete-route $domain --hostname $name -f
+    #$DRY_RUN cf delete-route $domain --hostname $name -f
 
     $DRY_RUN cf push -f manifest.yml -d $domain --hostname $name; if [ $? -ne 0 ]; then
         return 1
@@ -38,7 +23,7 @@ function deploy() {
 }
 
 #
-echo "### Deploying $CF_SPACE ..."
+echo "### Deploying ..."
 
 deploy; if [ $? -ne 0 ]; then
     echo "#### Deploy failed"

@@ -3,13 +3,13 @@ package ssh
 import (
 	"flag"
 	"fmt"
+	"github.com/gostones/huskie/ssh/minssh"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
-	"github.com/gostones/huskie/ssh/minssh"
 )
 
 var defaultKnownHostsFiles = []string{

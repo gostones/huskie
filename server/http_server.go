@@ -2,10 +2,10 @@ package server
 
 import (
 	"errors"
+	"fmt"
 	"net"
 	"net/http"
 	"sync"
-	"fmt"
 )
 
 //HTTPServer extends net/http Server and

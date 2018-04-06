@@ -3,40 +3,41 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
-	"net"
-	"github.com/gostones/huskie/tunnel"
 	"github.com/gostones/huskie/chat"
-	"github.com/gostones/huskie/ssh"
-	"bytes"
-	"strings"
-	"time"
-	"github.com/gostones/huskie/rp"
 	"github.com/gostones/huskie/docker"
+	"github.com/gostones/huskie/rp"
+	"github.com/gostones/huskie/ssh"
+	"github.com/gostones/huskie/tunnel"
+	"github.com/gostones/huskie/util"
+	"os"
+	"strings"
 )
 
 //
 var help = `
-  Usage: chisel [command] [--help]
+	Usage: huskie [command] [--help]
 
-  Commands:
-    server - runs chisel in server mode
-    client - runs chisel in client mode
-
-  Read more:
-    https://github.com/jpillora/chisel
-
+	Commands:
+		harness - server mode
+		whistle - chat service
+		dog     - worker mode (docker instance)
+		mush    - control agent
+		sshd    - peer host service (bash shell)
+		ssh     - connect to peer host
 `
+
 //
 var rps = `
 [common]
 bind_port = %v
 `
-//
+
+//server_port, local_port, remote_port
 var rpc = `
 [common]
 server_addr = 127.0.0.1
 server_port = %v
+http_proxy =
 
 [ssh]
 type = tcp
@@ -66,83 +67,79 @@ func main() {
 	serverPort := 7000
 	remotePort := 6000
 
- 	//
+	sleep := util.BackoffDuration()
+
+	//
 	switch subcmd {
 	case "harness":
 		go chat.Server([]string{"--bind", ":" + huskiePort, "--identity", os.Getenv("HUSKIE_IDENTITY")})
 		go rp.Server(fmt.Sprintf(rps, serverPort))
-		
+
 		tunnel.TunServer(args)
 	case "mush":
-		port := freePort()
+		port := util.FreePort()
 		fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, remotePort)
 
 		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, remotePort)))
 		//
-		for i := 0;;i++ {
+		for {
 			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), "ubuntu@localhost"})
 			if rc == 0 {
 				os.Exit(0)
 			}
-			secs := time.Duration((i % 10) * (i % 10)) * time.Second
-			fmt.Fprintf(os.Stdout, "rc: %v sleeping %v\n", rc, secs)
 
-			time.Sleep(secs)
+			sleep(rc)
 		}
 	case "dog":
-		port := freePort()
-		servicePort := freePort()
+		port := util.FreePort()
+		servicePort := util.FreePort()
 		fmt.Fprintf(os.Stdout, "local: %v remote: %v service: %v\n", port, remotePort, servicePort)
 
 		go docker.Server([]string{"ssh2docker", "--bind", fmt.Sprintf(":%v", servicePort)})
 		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, serverPort)))
 
-		for i := 0;;i++ {
+		for {
 			rc := rp.Client(fmt.Sprintf(rpc, port, servicePort, remotePort))
-			secs := time.Duration((i % 10) * (i % 10)) * time.Second
-			fmt.Fprintf(os.Stdout, "rc: %v sleeping %v\n", rc, secs)
-
-			time.Sleep(secs)
+			sleep(rc)
 		}
 	case "whistle":
-		port := freePort()
-		user := fmt.Sprintf("u_%v_%v", strings.Replace(macAddr(), ":", "", -1), port)
+		port := util.FreePort()
+		user := fmt.Sprintf("u_%v_%v", strings.Replace(util.MacAddr(), ":", "", -1), port)
 		fmt.Fprintf(os.Stdout, "local: %v user: %v\n", port, user)
 
 		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, huskiePort)))
 		//
-		for i := 0;;i++ {
+		for {
 			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
+			sleep(rc)
+		}
+	case "ssh":
+		port := util.FreePort()
+		fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, remotePort)
 
-			secs := time.Duration((i % 10) * (i % 10)) * time.Second
-			fmt.Fprintf(os.Stdout, "rc: %v sleeping %v\n", rc, secs)
+		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, remotePort)))
+		//
+		for {
+			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), "ubuntu@localhost"})
+			if rc == 0 {
+				os.Exit(0)
+			}
+			sleep(rc)
+		}
+	case "sshd":
+		port := util.FreePort()
+		servicePort := util.FreePort()
+		fmt.Fprintf(os.Stdout, "local: %v remote: %v service: %v\n", port, remotePort, servicePort)
 
-			time.Sleep(secs)
+		go ssh.Server(servicePort)
+		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, serverPort)))
+
+		for {
+			rc := rp.Client(fmt.Sprintf(rpc, port, servicePort, remotePort))
+			sleep(rc)
 		}
 	default:
 		fmt.Fprintf(os.Stderr, help)
 		os.Exit(1)
 	}
-}
-
-func freePort() int {
-	l, err := net.Listen("tcp", "127.0.0.1:")
-	if err != nil {
-		panic(err)
-	}
-	defer l.Close()
-	return l.Addr().(*net.TCPAddr).Port
-}
-
-func macAddr() (addr string) {
-	interfaces, err := net.Interfaces()
-	if err == nil {
-		for _, i := range interfaces {
-			if i.Flags&net.FlagUp != 0 && bytes.Compare(i.HardwareAddr, nil) != 0 {
-				addr = i.HardwareAddr.String()
-				break
-			}
-		}
-	}
-	return
 }

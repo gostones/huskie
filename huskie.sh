@@ -40,6 +40,6 @@ fi
 
 ssh-keygen -f host_key -P ''
 
-huskie $1 -v $proxy $url
+huskie $1 -v --keepalive 15s $proxy $url
 
 ##

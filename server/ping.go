@@ -1,8 +1,8 @@
 package server
 
 import (
-	"net/http"
 	"fmt"
+	"net/http"
 )
 
 func ping(w http.ResponseWriter, req *http.Request) {

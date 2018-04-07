@@ -30,9 +30,10 @@ rm -f $keyfile ${keyfile}.pub
 
 [[ -z $HUSKIE_PORT ]] && export HUSKIE_PORT="2022"                    #chat server port
 [[ -z $HUSKIE_IDENTITY ]] && export HUSKIE_IDENTITY="$base/$keyfile"  #chat server private key
+[[ -z $PORT ]] && export PORT="8080"
 
 if [ $# -gt 1 ]; then
-    url="http://localhost:8022/tunnel"
+    url="http://localhost:$PORT/tunnel"
 else
     url="https://huskie.run.aws-usw02-pr.ice.predix.io/tunnel"
     [[ $http_proxy ]] && proxy="--proxy $http_proxy"

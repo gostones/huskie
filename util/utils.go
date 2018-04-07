@@ -12,7 +12,7 @@ import (
 func BackoffDuration() func(int) {
 	b := &backoff.Backoff{
 		Min:    100 * time.Millisecond,
-		Max:    100 * time.Second,
+		Max:    60 * time.Second,
 		Factor: 2,
 		Jitter: true,
 	}

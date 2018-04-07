@@ -27,13 +27,13 @@ var help = `
 `
 
 //
-var rps = `
+var sshrps = `
 [common]
 bind_port = %v
 `
 
 //server_port, local_port, remote_port
-var rpc = `
+var sshrpc = `
 [common]
 server_addr = 127.0.0.1
 server_port = %v
@@ -44,6 +44,24 @@ type = tcp
 local_ip = 127.0.0.1
 local_port = %v
 remote_port = %v
+`
+
+//
+var webrps = `
+[common]
+bind_port = %v
+vhost_http_port = 58080
+`
+var webrpc = `
+[common]
+server_addr = 127.0.0.1
+server_port = %v
+http_proxy =
+
+[web]
+type = http
+local_port = %v
+custom_domains = localhost
 `
 
 func main() {
@@ -67,13 +85,16 @@ func main() {
 	serverPort := 7000
 	remotePort := 6000
 
+	webport := 7080
+
 	sleep := util.BackoffDuration()
 
 	//
 	switch subcmd {
 	case "harness":
 		go chat.Server([]string{"--bind", ":" + huskiePort, "--identity", os.Getenv("HUSKIE_IDENTITY")})
-		go rp.Server(fmt.Sprintf(rps, serverPort))
+		go rp.Server(fmt.Sprintf(sshrps, serverPort))
+		go rp.Server(fmt.Sprintf(webrps, webport))
 
 		tunnel.TunServer(args)
 	case "mush":
@@ -99,7 +120,19 @@ func main() {
 		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, serverPort)))
 
 		for {
-			rc := rp.Client(fmt.Sprintf(rpc, port, servicePort, remotePort))
+			rc := rp.Client(fmt.Sprintf(sshrpc, port, servicePort, remotePort))
+			sleep(rc)
+		}
+	case "webc":
+		port := util.FreePort()
+		lport := 18080
+		fmt.Fprintf(os.Stdout, "local: %v  local http: %v web service: %v\n", port, lport, webport)
+
+		//TODO go start rshiny/any web app
+		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, webport)))
+
+		for {
+			rc := rp.Client(fmt.Sprintf(webrpc, port, lport))
 			sleep(rc)
 		}
 	case "whistle":
@@ -135,7 +168,7 @@ func main() {
 		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, serverPort)))
 
 		for {
-			rc := rp.Client(fmt.Sprintf(rpc, port, servicePort, remotePort))
+			rc := rp.Client(fmt.Sprintf(sshrpc, port, servicePort, remotePort))
 			sleep(rc)
 		}
 	default:

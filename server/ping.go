@@ -1,10 +1,16 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 )
 
 func ping(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "pong!")
+	type health struct {
+		Name      string `json:"name"`
+		Status    string `json:"status"`
+		Timestamp int64  `json:"timestamp"`
+	}
+	name := "Huskie"
+	m := health{Name: name, Status: "UP", Timestamp: CurrentTimestamp()}
+	HandleJson(&m, w, req)
 }

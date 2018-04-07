@@ -42,6 +42,10 @@ func (h *HTTPServer) GoListenAndServe(addr string, handler http.Handler) error {
 
 	//apis
 
+	//web proxy
+	wproxy := NewWebProxy("/web", mux)
+	wproxy.Handle()
+
 	//tunnel
 	mux.Handle("/tunnel", handler)
 

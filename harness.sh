@@ -13,7 +13,7 @@ rm -f $keyfile ${keyfile}.pub
 [[ -z $HUSKIE_PORT ]] && export HUSKIE_PORT="2022"                    #chat server port
 [[ -z $HUSKIE_IDENTITY ]] && export HUSKIE_IDENTITY="$base/$keyfile"  #chat server private key
 
-[[ -z $PORT ]] && export PORT="8022"
+[[ -z $PORT ]] && export PORT="8080"
 
 export PATH=/app/bin:$PATH
 

@@ -1,6 +1,8 @@
 ---
 applications:
 - name: huskie
+  health-check-type: http
+  health-check-http-endpoint: /ping
   memory: 64M
   disk_quota: 2G
   instances: 1

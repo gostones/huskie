@@ -23,7 +23,7 @@ func Server(port int) {
 		cmd := exec.Command("bash")
 		ptyReq, winCh, isPty := s.Pty()
 		if isPty {
-			cmd.Env = append(cmd.Env, fmt.Sprintf("TERM=%s", ptyReq.Term))
+			cmd.Env = append(os.Environ(), fmt.Sprintf("TERM=%s", ptyReq.Term))
 			f, err := pty.Start(cmd)
 			if err != nil {
 				panic(err)

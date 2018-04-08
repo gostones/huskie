@@ -50,7 +50,6 @@ remote_port = %v
 var webrps = `
 [common]
 bind_port = %v
-vhost_http_port = 58080
 `
 var webrpc = `
 [common]
@@ -59,9 +58,10 @@ server_port = %v
 http_proxy =
 
 [web]
-type = http
+type = tcp
+local_ip = 127.0.0.1
 local_port = %v
-custom_domains = localhost
+remote_port = 58080
 `
 
 func main() {
@@ -95,8 +95,24 @@ func main() {
 		go chat.Server([]string{"--bind", ":" + huskiePort, "--identity", os.Getenv("HUSKIE_IDENTITY")})
 		go rp.Server(fmt.Sprintf(sshrps, serverPort))
 		go rp.Server(fmt.Sprintf(webrps, webport))
+		go ssh.Server(9022)
 
 		tunnel.TunServer(args)
+	case "bash":
+		rport := 9022
+		port := util.FreePort()
+		fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, rport)
+
+		go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, rport)))
+		//
+		for {
+			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), "localhost"})
+			if rc == 0 {
+				os.Exit(0)
+			}
+
+			sleep(rc)
+		}
 	case "mush":
 		port := util.FreePort()
 		fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, remotePort)
@@ -144,6 +160,9 @@ func main() {
 		//
 		for {
 			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
+			if rc == 0 {
+				os.Exit(0)
+			}
 			sleep(rc)
 		}
 	case "ssh":

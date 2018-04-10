@@ -15,10 +15,10 @@ import (
 	"github.com/jessevdk/go-flags"
 	"golang.org/x/crypto/ssh"
 
-	"github.com/shazow/ssh-chat"
-	"github.com/shazow/ssh-chat/chat"
-	"github.com/shazow/ssh-chat/chat/message"
-	"github.com/shazow/ssh-chat/sshd"
+	"github.com/gostones/ssh-chat"
+	"github.com/gostones/ssh-chat/chat"
+	"github.com/gostones/ssh-chat/chat/message"
+	"github.com/gostones/ssh-chat/sshd"
 )
 import _ "net/http/pprof"
 
@@ -115,12 +115,12 @@ func Server(args []string) {
 		fail(4, "Failed to listen on socket: %v\n", err)
 	}
 	defer s.Close()
-	s.RateLimit = sshd.NewInputLimiter
+	//s.RateLimit = sshd.NewInputLimiter
 
 	fmt.Printf("Listening for connections on %v\n", s.Addr().String())
 
 	host := sshchat.NewHost(s, auth)
-	host.SetTheme(message.Themes[0])
+	//host.SetTheme(message.Themes[0])
 	host.Version = Version
 
 	err = fromFile(options.Admin, func(line []byte) error {

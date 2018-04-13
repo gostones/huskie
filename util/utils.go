@@ -14,7 +14,7 @@ func BackoffDuration() func(int) {
 		Min:    100 * time.Millisecond,
 		Max:    60 * time.Second,
 		Factor: 2,
-		Jitter: true,
+		Jitter: false,
 	}
 
 	return func(rc int) {

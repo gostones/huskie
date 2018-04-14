@@ -1,12 +1,14 @@
 package git
 
 import (
-	"testing"
 	"os"
 	"path/filepath"
+	"testing"
 )
 
 func TestClone(t *testing.T) {
+	t.Skip("Skipping TestClone")
+
 	base := os.TempDir()
 	os.MkdirAll(base, 0666)
 	dir := filepath.Join(base, "goboot-starter")
@@ -15,4 +17,3 @@ func TestClone(t *testing.T) {
 
 	t.Logf("dir: %v", dir)
 }
-

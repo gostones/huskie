@@ -20,7 +20,7 @@ func setWinsize(f *os.File, w, h int) {
 
 func Server(port int) {
 	ssh.Handle(func(s ssh.Session) {
-		cmd :=  exec.Command("/usr/bin/login") //exec.Command("bash")
+		cmd := exec.Command("/usr/bin/login") //exec.Command("bash")
 		ptyReq, winCh, isPty := s.Pty()
 		if isPty {
 			cmd.Env = append(os.Environ(), fmt.Sprintf("TERM=%s", ptyReq.Term))

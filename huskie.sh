@@ -32,15 +32,11 @@ rm -f $keyfile ${keyfile}.pub
 [[ -z $HUSKIE_IDENTITY ]] && export HUSKIE_IDENTITY="$base/$keyfile"  #chat server private key
 [[ -z $PORT ]] && export PORT="8080"
 
-if [ $# -gt 1 ]; then
-    url="http://localhost:$PORT/tunnel"
-else
-    url="https://huskie.run.aws-usw02-pr.ice.predix.io/tunnel"
-    [[ $http_proxy ]] && proxy="--proxy $http_proxy"
-fi
+export HUSKIE_URL="http://localhost:8080/tunnel"
+#export HUSKIE_URL="https://huskie.run.aws-usw02-pr.ice.predix.io/tunnel"
 
 ssh-keygen -f host_key -P ''
 
-huskie $1 -v --keepalive 15s $proxy $url
+huskie $1
 
 ##

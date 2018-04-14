@@ -59,8 +59,9 @@ func (h *HTTPServer) GoListenAndServe(addr string, handler http.Handler) error {
 		fmt.Fprintf(w, "Welcome!")
 	})
 
-	//
 	h.Handler = mux
+	//
+
 	h.listener = l
 	go func() {
 		h.closeWith(h.Serve(l))

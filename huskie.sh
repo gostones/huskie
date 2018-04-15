@@ -33,7 +33,7 @@ rm -f $keyfile ${keyfile}.pub
 [[ -z $PORT ]] && export PORT="8080"
 
 export HUSKIE_URL="http://localhost:8080/tunnel"
-#export HUSKIE_URL="https://huskie.run.aws-usw02-pr.ice.predix.io/tunnel"
+export HUSKIE_URL="https://huskie.run.aws-usw02-pr.ice.predix.io/tunnel"
 
 ssh-keygen -f host_key -P ''
 

@@ -6,6 +6,7 @@ import (
 	"github.com/gostones/huskie/chat"
 	"github.com/gostones/huskie/tunnel"
 	"github.com/gostones/huskie/util"
+	"github.com/gostones/huskie/ssh"
 	"os"
 	"strings"
 )
@@ -83,7 +84,7 @@ func main() {
 	//sshPort := 7022
 	//webport := 7080
 
-	//sleep := util.BackoffDuration()
+	sleep := util.BackoffDuration()
 
 	//
 	switch subcmd {
@@ -97,7 +98,7 @@ func main() {
 		tunnel.TunServer(os.Getenv("PORT"))
 	case "whistle":
 		lport := util.FreePort()
-		user := fmt.Sprintf("u_%v_%v", strings.Replace(util.MacAddr(), ":", "", -1), lport)
+		user := genUser(lport)
 		fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
 
 		url := os.Getenv("HUSKIE_URL")
@@ -105,15 +106,34 @@ func main() {
 
 		proxy := os.Getenv("http_proxy")
 		remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, rport)
-		tunnel.TunClient(proxy, url, remote)
-	//
-	//for {
-	//	rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
-	//	if rc == 0 {
-	//		os.Exit(0)
-	//	}
-	//	sleep(rc)
-	//}
+		go tunnel.TunClient(proxy, url, remote)
+
+		for {
+			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", lport), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
+			if rc == 0 {
+				os.Exit(0)
+			}
+			sleep(rc)
+		}
+	case "puppy":
+		lport := util.FreePort()
+		user := genUser(lport)
+		fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
+
+		url := os.Getenv("HUSKIE_URL")
+		rport := os.Getenv("HUSKIE_PORT")
+
+		proxy := os.Getenv("http_proxy")
+		remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, rport)
+		go tunnel.TunClient(proxy, url, remote)
+
+		for {
+			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", lport), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
+			if rc == 0 {
+				os.Exit(0)
+			}
+			sleep(rc)
+		}
 	//case "bash":
 	//	rport := 9022
 	//	port := util.FreePort()
@@ -195,4 +215,8 @@ func main() {
 		fmt.Fprintf(os.Stderr, help)
 		os.Exit(1)
 	}
+}
+
+func genUser(rand int) string {
+	return fmt.Sprintf("u_%v_%v", strings.Replace(util.MacAddr(), ":", "", -1), rand)
 }

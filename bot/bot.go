@@ -55,7 +55,7 @@ func Bot(user string, addr string) error {
 		return err
 	}
 
-	delay := 5*time.Second
+	delay := 5 * time.Second
 
 	go func() {
 		time.Sleep(delay)
@@ -83,8 +83,9 @@ func Bot(user string, addr string) error {
 
 		cm := ChatMessage{}
 		err := json.Unmarshal([]byte(line), &cm)
-		fmt.Printf("invalid json: %v", err)
-		if err == nil {
+		if err != nil {
+			fmt.Printf("json error: %v\n", err)
+		} else {
 			cmdline := strings.Split(cm.Msg, " ")
 			cmd := &robots.Command{
 				From:    cm.From,
@@ -102,7 +103,8 @@ func Bot(user string, addr string) error {
 			}
 
 			if response := robot.Run(cmd); response != "" {
-				reply(in, fmt.Sprintf(`{ "to": "%s", "msg": "%s" }`, cm.From, response))
+				//TODO check from
+				reply(in, fmt.Sprintf(`/msg %v %s`, cm.From, response))
 			}
 		}
 

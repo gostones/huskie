@@ -6,7 +6,9 @@ import "strings"
 type EchoBot struct{}
 
 func init() {
-	RegisterRobot("echo", func() (robot Robot) { return new(EchoBot) })
+	RegisterRobot("echo", func() (robot Robot) {
+		return new(EchoBot)
+	})
 }
 
 // Run executes a command

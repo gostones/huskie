@@ -229,28 +229,28 @@
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat",
-			"Comment": "v1.7-3-g79ea2b4",
-			"Rev": "79ea2b46574dce9c5e73593b649d19a16babb226"
+			"Comment": "v1.7-3-gb9f4d5e",
+			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/chat",
-			"Comment": "v1.7-3-g79ea2b4",
-			"Rev": "79ea2b46574dce9c5e73593b649d19a16babb226"
+			"Comment": "v1.7-3-gb9f4d5e",
+			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/chat/message",
-			"Comment": "v1.7-3-g79ea2b4",
-			"Rev": "79ea2b46574dce9c5e73593b649d19a16babb226"
+			"Comment": "v1.7-3-gb9f4d5e",
+			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/set",
-			"Comment": "v1.7-3-g79ea2b4",
-			"Rev": "79ea2b46574dce9c5e73593b649d19a16babb226"
+			"Comment": "v1.7-3-gb9f4d5e",
+			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/sshd",
-			"Comment": "v1.7-3-g79ea2b4",
-			"Rev": "79ea2b46574dce9c5e73593b649d19a16babb226"
+			"Comment": "v1.7-3-gb9f4d5e",
+			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
 		},
 		{
 			"ImportPath": "github.com/howeyc/gopass",

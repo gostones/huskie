@@ -6,7 +6,9 @@ import "strings"
 type HelpBot struct{}
 
 func init() {
-	RegisterRobot("help", func() (robot Robot) { return new(HelpBot) })
+	RegisterRobot("help", func() (robot Robot) {
+		return new(HelpBot)
+	})
 }
 
 // Run returns a list of all robots

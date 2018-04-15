@@ -4,7 +4,9 @@ package robots
 type PingBot struct{}
 
 func init() {
-	RegisterRobot("ping", func() (robot Robot) { return new(PingBot) })
+	RegisterRobot("ping", func() (robot Robot) {
+		return new(PingBot)
+	})
 }
 
 // Run executes a command

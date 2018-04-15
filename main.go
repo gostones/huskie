@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"github.com/gostones/huskie/bot"
 	"github.com/gostones/huskie/chat"
+	"github.com/gostones/huskie/rp"
 	"github.com/gostones/huskie/ssh"
 	"github.com/gostones/huskie/tunnel"
 	"github.com/gostones/huskie/util"
 	"os"
-	"strings"
+	"strconv"
 )
 
 //
@@ -18,52 +19,12 @@ var help = `
 
 	Commands:
 		harness - server mode
-		whistle - chat service
-
-		dog     - worker mode (docker instance)
+		pub     - worker mode (docker instance)
+		whistle - messaging service
 		mush    - control agent
-		sshd    - peer host service (bash shell)
-		ssh     - connect to peer host
 `
 
 //
-var sshrps = `
-[common]
-bind_port = %v
-`
-
-//server_port, local_port, remote_port
-var sshrpc = `
-[common]
-server_addr = localhost
-server_port = %v
-http_proxy =
-
-[ssh]
-type = tcp
-local_ip = localhost
-local_port = %v
-remote_port = %v
-`
-
-//
-var webrps = `
-[common]
-bind_port = %v
-`
-var webrpc = `
-[common]
-server_addr = localhost
-server_port = %v
-http_proxy =
-
-[web]
-type = tcp
-local_ip = localhost
-local_port = %v
-remote_port = 58080
-`
-
 func main() {
 
 	flag.Bool("help", false, "")
@@ -71,7 +32,6 @@ func main() {
 	flag.Usage = func() {}
 	flag.Parse()
 
-	//
 	args := flag.Args()
 
 	subcmd := ""
@@ -80,144 +40,216 @@ func main() {
 		args = args[1:]
 	}
 
-	//remotePort := 6000
-
-	//sshPort := 7022
-	//webport := 7080
-
-	sleep := util.BackoffDuration()
-
 	//
 	switch subcmd {
 	case "harness":
-		port := os.Getenv("HUSKIE_PORT")
-		go chat.Server([]string{"--bind", ":" + port, "--identity", os.Getenv("HUSKIE_IDENTITY")})
-		//go rp.Server(fmt.Sprintf(sshrps, sshPort))
-		//go rp.Server(fmt.Sprintf(webrps, webport))
-		//go ssh.Server(9022)
-
-		tunnel.TunServer(os.Getenv("PORT"))
+		harness(args)
 	case "whistle":
-		lport := util.FreePort()
-		user := genUser(lport)
-		fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
-
-		url := os.Getenv("HUSKIE_URL")
-		rport := os.Getenv("HUSKIE_PORT")
-
-		proxy := os.Getenv("http_proxy")
-		remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, rport)
-		go tunnel.TunClient(proxy, url, remote)
-
-		for {
-			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", lport), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
-			if rc == 0 {
-				os.Exit(0)
-			}
-			sleep(rc)
-		}
+		whistle(args)
 	case "pup":
-		lport := util.FreePort()
-		user := fmt.Sprintf("puppy%v", lport)
-		fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
-
-		url := os.Getenv("HUSKIE_URL")
-		rport := os.Getenv("HUSKIE_PORT")
-
-		proxy := os.Getenv("http_proxy")
-		remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, rport)
-		go tunnel.TunClient(proxy, url, remote)
-
-		for {
-			rc := bot.Server(user, "localhost", lport)
-			if rc == 0 {
-				os.Exit(0)
-			}
-			sleep(rc)
-		}
-	//case "bash":
-	//	rport := 9022
-	//	port := util.FreePort()
-	//	fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, rport)
-	//
-	//	go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, rport)))
-	//	//
-	//	for {
-	//		rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), "localhost"})
-	//		if rc == 0 {
-	//			os.Exit(0)
-	//		}
-	//
-	//		sleep(rc)
-	//	}
-	//case "mush":
-	//	port := util.FreePort()
-	//	fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, remotePort)
-	//
-	//	go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, remotePort)))
-	//	//
-	//	for {
-	//		rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), "ubuntu@localhost"})
-	//		if rc == 0 {
-	//			os.Exit(0)
-	//		}
-	//
-	//		sleep(rc)
-	//	}
-	//case "dog":
-	//	port := util.FreePort()
-	//	servicePort := util.FreePort()
-	//	fmt.Fprintf(os.Stdout, "local: %v remote: %v service: %v\n", port, remotePort, servicePort)
-	//
-	//	go docker.Server([]string{"ssh2docker", "--bind", fmt.Sprintf(":%v", servicePort)})
-	//	go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, serverPort)))
-	//
-	//	for {
-	//		rc := rp.Client(fmt.Sprintf(sshrpc, port, servicePort, remotePort))
-	//		sleep(rc)
-	//	}
-	//case "webc":
-	//	port := util.FreePort()
-	//	lport := 18080
-	//	fmt.Fprintf(os.Stdout, "local: %v  local http: %v web service: %v\n", port, lport, webport)
-	//
-	//	//TODO go start rshiny/any web app
-	//	go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, webport)))
-	//
-	//	for {
-	//		rc := rp.Client(fmt.Sprintf(webrpc, port, lport))
-	//		sleep(rc)
-	//	}
-	//case "ssh":
-	//	port := util.FreePort()
-	//	fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", port, remotePort)
-	//
-	//	go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, remotePort)))
-	//	//
-	//	for {
-	//		rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", port), "--i", os.Getenv("HUSKIE_IDENTITY"), "localhost"})
-	//		if rc == 0 {
-	//			os.Exit(0)
-	//		}
-	//		sleep(rc)
-	//	}
-	//case "sshd":
-	//	port := util.FreePort()
-	//	servicePort := 22 //util.FreePort()
-	//	//go ssh.Server(servicePort)
-	//	fmt.Fprintf(os.Stdout, "local: %v remote: %v service: %v\n", port, remotePort, servicePort)
-	//
-	//	go tunnel.TunClient(append(args, fmt.Sprintf("localhost:%v:localhost:%v", port, sshPort)))
-	//	for {
-	//		rc := rp.Client(fmt.Sprintf(sshrpc, port, servicePort, remotePort))
-	//		sleep(rc)
-	//	}
+		puppy(args)
+	case "mush":
+		mush(args)
 	default:
 		fmt.Fprintf(os.Stderr, help)
 		os.Exit(1)
 	}
 }
 
-func genUser(rand int) string {
-	return fmt.Sprintf("u_%v_%v", strings.Replace(util.MacAddr(), ":", "", -1), rand)
+//func genUser(rand int) string {
+//	return fmt.Sprintf("u_%v_%v", strings.Replace(util.MacAddr(), ":", "", -1), rand)
+//}
+
+var rps = `
+[common]
+bind_port = %v
+`
+
+func harness(args []string) {
+	flags := flag.NewFlagSet("server", flag.ContinueOnError)
+
+	b := flags.Int("b", -1, "")
+	bind := flags.Int("bind", -1, "")
+
+	p := flags.Int("p", -1, "")
+	port := flags.Int("port", -1, "")
+
+	i := flags.String("i", "", "")
+	ident := flags.String("identity", "", "")
+
+	v := flags.Bool("v", false, "")
+
+	rport := flags.Int("rps", 8000, "")
+
+	sport := flags.Int("ssh", 8022, "")
+
+	flags.Parse(args)
+
+	//
+	args = []string{}
+
+	if *bind == -1 {
+		*bind = *b
+	}
+	if *bind == -1 {
+		*bind = parseInt(os.Getenv("PORT"), 8080)
+	}
+
+	if *port == -1 {
+		*port = *p
+	}
+	if *port == -1 {
+		*port = parseInt(os.Getenv("HUSKIE_PORT"), 2022)
+	}
+
+	args = append(args, "--bind", fmt.Sprintf(":%v", *port))
+
+	if *ident == "" {
+		*ident = *i
+	}
+	if *ident == "" {
+		*ident = os.Getenv("HUSKIE_IDENTITY")
+	}
+	args = append(args, "--identity", *ident)
+
+	if *v {
+		args = append(args, "-v")
+	}
+
+	go chat.Server(args)
+
+	go rp.Server(fmt.Sprintf(rps, *rport))
+	go ssh.Server(*sport, "bash")
+
+	tunnel.TunServer(fmt.Sprintf("%v", *bind))
+}
+
+func whistle(args []string) {
+	connect(args)
+}
+
+func mush(args []string) {
+	connect(args)
+}
+
+func connect(args []string) {
+	flags := flag.NewFlagSet("connect", flag.ContinueOnError)
+
+	p := flags.Int("p", -1, "")
+	port := flags.Int("port", -1, "")
+
+	i := flags.String("i", "", "")
+	ident := flags.String("identity", "", "")
+
+	u := flags.String("u", "", "")
+	url := flags.String("url", "", "")
+
+	proxy := flags.String("proxy", "", "")
+
+	flags.Parse(args)
+
+	if *url == "" {
+		*url = *u
+	}
+	if *url == "" {
+		*url = os.Getenv("HUSKIE_URL")
+	}
+	if *url == "" {
+		*url = "http://localhost:8080/tunnel"
+	}
+
+	if *proxy == "" {
+		*proxy = os.Getenv("http_proxy")
+	}
+
+	if *port == -1 {
+		*port = *p
+	}
+	if *port == -1 {
+		*port = parseInt(os.Getenv("HUSKIE_PORT"), 2022)
+	}
+
+	if *ident == "" {
+		*ident = *i
+	}
+	if *ident == "" {
+		*ident = os.Getenv("HUSKIE_IDENTITY")
+	}
+	if  *ident == "" {
+		*ident = "host_key"
+	}
+
+	//
+	lport := util.FreePort()
+
+	fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", lport, *port)
+
+	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, *port)
+	go tunnel.TunClient(*proxy, *url, remote)
+
+	//
+	args = []string{"--p", fmt.Sprintf("%v", lport), "--i", *ident, "localhost"}
+	sleep := util.BackoffDuration()
+	for {
+		rc := ssh.Client(args)
+		if rc == 0 {
+			os.Exit(0)
+		}
+		sleep(rc)
+	}
+}
+
+func puppy(args []string) {
+	flags := flag.NewFlagSet("puppy", flag.ContinueOnError)
+
+	p := flags.Int("p", -1, "")
+	port := flags.Int("port", -1, "")
+
+	u := flags.String("u", "", "")
+	url := flags.String("url", "", "")
+
+	proxy := flags.String("proxy", "", "")
+
+	flags.Parse(args)
+
+	if *url == "" {
+		*url = *u
+	}
+	if *url == "" {
+		*url = os.Getenv("HUSKIE_URL")
+	}
+
+	if *proxy == "" {
+		*proxy = os.Getenv("http_proxy")
+	}
+
+	//
+	if *port == -1 {
+		*port = *p
+	}
+	if *port == -1 {
+		*port = parseInt(os.Getenv("HUSKIE_PORT"), 2022)
+	}
+
+	lport := util.FreePort()
+	user := fmt.Sprintf("puppy%v", lport)
+	fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
+
+	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, *port)
+	go tunnel.TunClient(*proxy, *url, remote)
+
+	sleep := util.BackoffDuration()
+
+	for {
+		rc := bot.Server(user, "localhost", lport)
+		sleep(rc)
+	}
+}
+
+func parseInt(s string, v int) int {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		i = v
+	}
+	return i
 }

@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/gostones/huskie/bot"
 	"github.com/gostones/huskie/chat"
+	"github.com/gostones/huskie/ssh"
 	"github.com/gostones/huskie/tunnel"
 	"github.com/gostones/huskie/util"
-	"github.com/gostones/huskie/ssh"
 	"os"
 	"strings"
 )
@@ -115,9 +116,9 @@ func main() {
 			}
 			sleep(rc)
 		}
-	case "puppy":
+	case "pup":
 		lport := util.FreePort()
-		user := genUser(lport)
+		user := fmt.Sprintf("puppy%v", lport)
 		fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
 
 		url := os.Getenv("HUSKIE_URL")
@@ -128,7 +129,7 @@ func main() {
 		go tunnel.TunClient(proxy, url, remote)
 
 		for {
-			rc := ssh.Client([]string{"--p", fmt.Sprintf("%v", lport), "--i", os.Getenv("HUSKIE_IDENTITY"), user + "@localhost"})
+			rc := bot.Server(user, "localhost", lport)
 			if rc == 0 {
 				os.Exit(0)
 			}

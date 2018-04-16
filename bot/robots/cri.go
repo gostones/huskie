@@ -26,7 +26,7 @@ func (b CriBot) Run(c *Command) string {
 		return fmt.Sprintf("%v", err)
 	}
 
-	go docker.Server([]string{"ssh2docker", "--bind", fmt.Sprintf(":%v", port)})
+	go docker.Server(port)
 
 	return fmt.Sprintf("cri started at %v", port)
 }

@@ -175,7 +175,7 @@ func connect(args []string) {
 	if *ident == "" {
 		*ident = os.Getenv("HUSKIE_IDENTITY")
 	}
-	if  *ident == "" {
+	if *ident == "" {
 		*ident = "host_key"
 	}
 

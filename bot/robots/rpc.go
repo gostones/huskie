@@ -62,7 +62,7 @@ server_addr = localhost
 server_port = %v
 http_proxy =
 
-[ssh]
+[rpc%v]
 type = tcp
 local_ip = localhost
 local_port = %v
@@ -81,7 +81,7 @@ func (b RpcBot) sshd(sport, rport int) {
 	sleep := util.BackoffDuration()
 
 	for {
-		rc := rp.Client(fmt.Sprintf(rpc, lport, sport, rport))
+		rc := rp.Client(fmt.Sprintf(rpc, lport, rport, sport, rport))
 		if rc == 0 {
 			return
 		}

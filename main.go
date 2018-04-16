@@ -19,7 +19,7 @@ var help = `
 
 	Commands:
 		harness - server mode
-		pub     - worker mode (docker instance)
+		pup     - worker mode (docker instance)
 		whistle - messaging service
 		mush    - control agent
 `
@@ -64,6 +64,7 @@ var rps = `
 [common]
 bind_port = %v
 `
+var huskiePort = 2022
 
 func harness(args []string) {
 	flags := flag.NewFlagSet("server", flag.ContinueOnError)
@@ -99,7 +100,7 @@ func harness(args []string) {
 		*port = *p
 	}
 	if *port == -1 {
-		*port = parseInt(os.Getenv("HUSKIE_PORT"), 2022)
+		*port = parseInt(os.Getenv("HUSKIE_PORT"), huskiePort)
 	}
 
 	args = append(args, "--bind", fmt.Sprintf(":%v", *port))
@@ -110,6 +111,11 @@ func harness(args []string) {
 	if *ident == "" {
 		*ident = os.Getenv("HUSKIE_IDENTITY")
 	}
+	if *ident == "" {
+		*ident = "host_key"
+		util.RsaKeyPair(*ident)
+	}
+
 	args = append(args, "--identity", *ident)
 
 	if *v {
@@ -166,7 +172,7 @@ func connect(args []string) {
 		*port = *p
 	}
 	if *port == -1 {
-		*port = parseInt(os.Getenv("HUSKIE_PORT"), 2022)
+		*port = parseInt(os.Getenv("HUSKIE_PORT"), huskiePort)
 	}
 
 	if *ident == "" {
@@ -177,6 +183,7 @@ func connect(args []string) {
 	}
 	if *ident == "" {
 		*ident = "host_key"
+		util.RsaKeyPair(*ident)
 	}
 
 	//
@@ -218,6 +225,9 @@ func puppy(args []string) {
 	if *url == "" {
 		*url = os.Getenv("HUSKIE_URL")
 	}
+	if *url == "" {
+		*url = "http://localhost:8080/tunnel"
+	}
 
 	if *proxy == "" {
 		*proxy = os.Getenv("http_proxy")
@@ -247,6 +257,9 @@ func puppy(args []string) {
 }
 
 func parseInt(s string, v int) int {
+	if s == "" {
+		return v
+	}
 	i, err := strconv.Atoi(s)
 	if err != nil {
 		i = v

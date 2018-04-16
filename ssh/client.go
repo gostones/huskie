@@ -79,18 +79,18 @@ func (a *app) initApp() (err error) {
 		return fmt.Errorf("failed to create an application directory: %s", err)
 	}
 
-	for i, f := range defaultKnownHostsFiles {
-		f = filepath.Join(a.dir, f)
-		if _, err := os.Lstat(f); err == nil {
-			a.conf.KnownHostsFiles = append(a.conf.KnownHostsFiles, f)
-		} else if os.IsNotExist(err) && i == 0 {
-			// if there isn't "known_host" file, create a empty file
-			if fh, err := os.OpenFile(f, os.O_RDONLY|os.O_CREATE, 0600); err == nil {
-				fh.Close()
-				a.conf.KnownHostsFiles = append(a.conf.KnownHostsFiles, f)
-			}
-		}
-	}
+	//for i, f := range defaultKnownHostsFiles {
+	//	f = filepath.Join(a.dir, f)
+	//	if _, err := os.Lstat(f); err == nil {
+	//		a.conf.KnownHostsFiles = append(a.conf.KnownHostsFiles, f)
+	//	} else if os.IsNotExist(err) && i == 0 {
+	//		// if there isn't "known_host" file, create a empty file
+	//		if fh, err := os.OpenFile(f, os.O_RDONLY|os.O_CREATE, 0600); err == nil {
+	//			fh.Close()
+	//			a.conf.KnownHostsFiles = append(a.conf.KnownHostsFiles, f)
+	//		}
+	//	}
+	//}
 
 	return
 }
@@ -113,36 +113,36 @@ func (a *app) parseArgs(args []string) (err error) {
 	//a.flagSet.Parse(os.Args[1:])
 	a.flagSet.Parse(args)
 
-	if showVersion {
-		//fmt.Println(version())
-		os.Exit(0)
-	}
-
-	if len(a.conf.IdentityFiles) == 0 {
-		for _, f := range defaultIdentityFiles {
-			f = filepath.Join(a.dir, f)
-			if _, err := os.Lstat(f); err == nil {
-				a.conf.IdentityFiles = append(a.conf.IdentityFiles)
-			}
-		}
-		if useOpenSSHFiles {
-			for _, f := range defaultIdentityFiles {
-				f = filepath.Join(a.homeDir, ".ssh", f)
-				if _, err := os.Lstat(f); err == nil {
-					a.conf.IdentityFiles = append(a.conf.IdentityFiles, f)
-				}
-			}
-		}
-	}
-
-	if useOpenSSHFiles {
-		for _, f := range defaultKnownHostsFiles {
-			f = filepath.Join(a.homeDir, ".ssh", f)
-			if _, err := os.Lstat(f); err == nil {
-				a.conf.KnownHostsFiles = append(a.conf.KnownHostsFiles, f)
-			}
-		}
-	}
+	//if showVersion {
+	//	//fmt.Println(version())
+	//	os.Exit(0)
+	//}
+	//
+	//if len(a.conf.IdentityFiles) == 0 {
+	//	for _, f := range defaultIdentityFiles {
+	//		f = filepath.Join(a.dir, f)
+	//		if _, err := os.Lstat(f); err == nil {
+	//			a.conf.IdentityFiles = append(a.conf.IdentityFiles)
+	//		}
+	//	}
+	//	if useOpenSSHFiles {
+	//		for _, f := range defaultIdentityFiles {
+	//			f = filepath.Join(a.homeDir, ".ssh", f)
+	//			if _, err := os.Lstat(f); err == nil {
+	//				a.conf.IdentityFiles = append(a.conf.IdentityFiles, f)
+	//			}
+	//		}
+	//	}
+	//}
+	//
+	//if useOpenSSHFiles {
+	//	for _, f := range defaultKnownHostsFiles {
+	//		f = filepath.Join(a.homeDir, ".ssh", f)
+	//		if _, err := os.Lstat(f); err == nil {
+	//			a.conf.KnownHostsFiles = append(a.conf.KnownHostsFiles, f)
+	//		}
+	//	}
+	//}
 
 	if logPath != "" {
 		a.logFile, err = os.OpenFile(logPath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)

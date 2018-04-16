@@ -10,6 +10,7 @@ import (
 	"github.com/apex/log/handlers/multi"
 	"github.com/apex/log/handlers/text"
 	"github.com/codegangsta/cli"
+	"github.com/gostones/huskie/util"
 	"github.com/moul/ssh2docker"
 	"github.com/moul/ssh2docker/pkg/sysloghandler"
 )
@@ -20,33 +21,33 @@ var VERSION string
 // You can easily use your own key by setting up
 // `--host-key=/path/to/id_rsa`.
 // See `man 1 ssh-keygen`.
-const DefaultHostKey = `-----BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEA0BGfZSFn5ueRzMGPnd4+QkbrJ5vRmRXdg0D3ukSxFQC+QCXM
-5lVYDtqp6DSsiIIr3PB0n94onebdDK7763RO1/fJP0ZBN3Ih1q0oQ9llrq7kuOd/
-ttjNviu9KAkVQLcfR6zxttIPu/xnwkn7Y0pNOpn6ytjA2whemEKTAyskLSNVBqtW
-r2TY/am7aXYG+1HSkbfSTSKI4ekzHAFLAZGK1q4FDOMAs6kC4IEmop1T3O2LvPBF
-QzTt2WT0kph4+4saMqo4yoKEcKbdnWRkZul1YOcVyJReFX78fCKGo9tVjwtHHa3C
-98WgjUiAXN2boGY2tPqk5vrTVmB69CJ6reezKQIDAQABAoIBAEBtRILnDio0iDPz
-t4m1mGejWAtCt2sElzueMVcPEBolycNJMSIdSRAIa1YIgWgfjn9yQVqDSuZh5w6X
-XFAzCnrbMgiSs3z8rTexFGe1+ENXymDq5ePzS/nXx1GPRnJsgZYLGil28AJQjLxf
-diTvi+xaY4rOBSGNfOT+sFDp2eDTofTbxidgDzEJe0tWMi9QHs5NkyERYO7cpd6I
-uXe0QLMP0aBzMKH4BFMiyBcY2gxYxqr1rC7YmEmn6M2HKxsHjGJ9K7msyJ0CdXNk
-tiqwi3++T3jOcOz3u1t921/wUb4P7TJmerduEt5fm6wJVPCwZdQBcmoMznC0FGb2
-5UwxeaUCgYEA7PTCQi7nxJB56CTxgM6m3D/+Lzdq1SBgUt3kzKPtJtDAfSCBd4hL
-NYNyJ2WqJBdoclY+FQq85Rn2EdZY7Baol3WK26y+xWgXrICzPAtBvNByrr7eFpJS
-2c35PrEuvJvsx0yn2HM4a8JYAm2yq+iJuW0aUNquhFLECvivsCfmXjcCgYEA4MqG
-Rxy2Xu47UELfG3GONe6qd9gv2WWMzXtGXQfzYcYQMFUtfAj04/5ER92BEVqVTARB
-ZOhdgLPTHsP4FwcjsCpjZQ2cW6QXUQfGJGrCWWd+3tFSv7ekrp4mXl4iXT/zJnWB
-BrbABDS8qwz2+YhV6ql2wlYbVI7wdAf4tev2yZ8CgYBQNWmsTYRWnTEmy5qUJ1+E
-HoVEJlYbXqI8arAQNU0JXpBJyr8IXzJWIvB5NYiqPuI0Ec1iAgh+5JLO5ueiwui+
-nCMsyQSqfdnFoqsJICZYa5bmX+V9bnptD7PW7NMNNRqpO+F0+0uV7mssJ0XbuxMj
-mTLXO67nS7zgmd2em2L3cQKBgAFYNMVoHo8izagFPmBjpX4dF1fwKxkZymXQPvN/
-gK0tChu/5q2/P/e9JZtob8UyzYHO5LU9zpFegfzFH07D9CqxljachjrmGF2btkux
-d8ghHlkm11/eMVX6DDC0T3BPWZz5RvRLU4qy5g3/3dpQPnNQ4Cz5ZuBymm2XPp2X
-87nxAoGBAIh+WKnvopNektUbJX7hDE1HBVVaFfM3VffNDfBYF9ziPotRqY+th30N
-Nn/aVy1yLb3M0eZCFD9A9/NE23kXAIFMAjM44NpqtXU/Z6Dmc+qB0Lk+KSL72cQL
-hLP2sDRnSOAAGEYHcN75mvdrKahDRQXD8l0FIRUn/BNTlob8g5Tp
------END RSA PRIVATE KEY-----`
+//const DefaultHostKey = `-----BEGIN RSA PRIVATE KEY-----
+//MIIEowIBAAKCAQEA0BGfZSFn5ueRzMGPnd4+QkbrJ5vRmRXdg0D3ukSxFQC+QCXM
+//5lVYDtqp6DSsiIIr3PB0n94onebdDK7763RO1/fJP0ZBN3Ih1q0oQ9llrq7kuOd/
+//ttjNviu9KAkVQLcfR6zxttIPu/xnwkn7Y0pNOpn6ytjA2whemEKTAyskLSNVBqtW
+//r2TY/am7aXYG+1HSkbfSTSKI4ekzHAFLAZGK1q4FDOMAs6kC4IEmop1T3O2LvPBF
+//QzTt2WT0kph4+4saMqo4yoKEcKbdnWRkZul1YOcVyJReFX78fCKGo9tVjwtHHa3C
+//98WgjUiAXN2boGY2tPqk5vrTVmB69CJ6reezKQIDAQABAoIBAEBtRILnDio0iDPz
+//t4m1mGejWAtCt2sElzueMVcPEBolycNJMSIdSRAIa1YIgWgfjn9yQVqDSuZh5w6X
+//XFAzCnrbMgiSs3z8rTexFGe1+ENXymDq5ePzS/nXx1GPRnJsgZYLGil28AJQjLxf
+//diTvi+xaY4rOBSGNfOT+sFDp2eDTofTbxidgDzEJe0tWMi9QHs5NkyERYO7cpd6I
+//uXe0QLMP0aBzMKH4BFMiyBcY2gxYxqr1rC7YmEmn6M2HKxsHjGJ9K7msyJ0CdXNk
+//tiqwi3++T3jOcOz3u1t921/wUb4P7TJmerduEt5fm6wJVPCwZdQBcmoMznC0FGb2
+//5UwxeaUCgYEA7PTCQi7nxJB56CTxgM6m3D/+Lzdq1SBgUt3kzKPtJtDAfSCBd4hL
+//NYNyJ2WqJBdoclY+FQq85Rn2EdZY7Baol3WK26y+xWgXrICzPAtBvNByrr7eFpJS
+//2c35PrEuvJvsx0yn2HM4a8JYAm2yq+iJuW0aUNquhFLECvivsCfmXjcCgYEA4MqG
+//Rxy2Xu47UELfG3GONe6qd9gv2WWMzXtGXQfzYcYQMFUtfAj04/5ER92BEVqVTARB
+//ZOhdgLPTHsP4FwcjsCpjZQ2cW6QXUQfGJGrCWWd+3tFSv7ekrp4mXl4iXT/zJnWB
+//BrbABDS8qwz2+YhV6ql2wlYbVI7wdAf4tev2yZ8CgYBQNWmsTYRWnTEmy5qUJ1+E
+//HoVEJlYbXqI8arAQNU0JXpBJyr8IXzJWIvB5NYiqPuI0Ec1iAgh+5JLO5ueiwui+
+//nCMsyQSqfdnFoqsJICZYa5bmX+V9bnptD7PW7NMNNRqpO+F0+0uV7mssJ0XbuxMj
+//mTLXO67nS7zgmd2em2L3cQKBgAFYNMVoHo8izagFPmBjpX4dF1fwKxkZymXQPvN/
+//gK0tChu/5q2/P/e9JZtob8UyzYHO5LU9zpFegfzFH07D9CqxljachjrmGF2btkux
+//d8ghHlkm11/eMVX6DDC0T3BPWZz5RvRLU4qy5g3/3dpQPnNQ4Cz5ZuBymm2XPp2X
+//87nxAoGBAIh+WKnvopNektUbJX7hDE1HBVVaFfM3VffNDfBYF9ziPotRqY+th30N
+//Nn/aVy1yLb3M0eZCFD9A9/NE23kXAIFMAjM44NpqtXU/Z6Dmc+qB0Lk+KSL72cQL
+//hLP2sDRnSOAAGEYHcN75mvdrKahDRQXD8l0FIRUn/BNTlob8g5Tp
+//-----END RSA PRIVATE KEY-----`
 
 func Server(args []string) {
 	app := cli.NewApp()
@@ -178,14 +179,20 @@ func Action(c *cli.Context) {
 	server.Banner = c.String("banner")
 
 	// Register the SSH host key
-	hostKey := c.String("host-key")
-	switch hostKey {
-	case "built-in":
-		hostKey = DefaultHostKey
-	case "system":
-		hostKey = "/etc/ssh/ssh_host_rsa_key"
+	//hostKey := c.String("host-key")
+
+	//switch hostKey {
+	//case "built-in":
+	//	hostKey = DefaultHostKey
+	//case "system":
+	//	hostKey = "/etc/ssh/ssh_host_rsa_key"
+	//}
+
+	hostKey, _, err := util.RsaKeyPair()
+	if err != nil {
+		log.Fatalf("Cannot generate host key: %v", err)
 	}
-	err = server.AddHostKey(hostKey)
+	err = server.AddHostKey(string(hostKey))
 	if err != nil {
 		log.Fatalf("Cannot add host key: %v", err)
 	}

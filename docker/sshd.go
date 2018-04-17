@@ -64,9 +64,9 @@ func Server(port int) {
 		//
 		_, _, isTty := sess.Pty()
 		cfg := &container.Config{
-			User:  sess.User(),
-			Image: image,
-			//Cmd:          cmd,
+			User:         sess.User(),
+			Image:        image,
+			Cmd:          cmd,
 			Env:          envs,
 			Tty:          isTty,
 			OpenStdin:    true,

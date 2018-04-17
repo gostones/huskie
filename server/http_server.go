@@ -2,10 +2,12 @@ package server
 
 import (
 	"errors"
-	"fmt"
+	"github.com/gorilla/mux"
+	"log"
 	"net"
 	"net/http"
 	"sync"
+	"time"
 )
 
 //HTTPServer extends net/http Server and
@@ -35,31 +37,37 @@ func (h *HTTPServer) GoListenAndServe(addr string, handler http.Handler) error {
 	h.isRunning = true
 
 	//
-	mux := http.NewServeMux()
+	r := mux.NewRouter()
+
+	//mux := http.NewServeMux()
 
 	//ping
-	mux.HandleFunc("/ping", ping)
+	r.HandleFunc("/ping", ping)
 
 	//apis
 
-	//web proxy
-	wproxy := NewWebProxy("/web", mux)
-	wproxy.Handle()
-
 	//tunnel
-	mux.Handle("/tunnel", handler)
+	r.Handle("/tunnel", handler)
 
-	mux.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		// The "/" pattern matches everything, so we need to check
-		// that we're at the root here.
-		if req.URL.Path != "/" {
-			http.NotFound(w, req)
-			return
+	//web proxy
+	r.HandleFunc("/web/{port}", func(res http.ResponseWriter, req *http.Request) {
+		port := mux.Vars(req)["port"]
+		s := HuskieSession{
+			Port:      str2port(port),
+			Timestamp: time.Now().UnixNano(),
 		}
-		fmt.Fprintf(w, "Welcome!")
+
+		SetCookie(res, &s)
+
+		log.Printf("Hanle /web/port: %v %v  url: %v", port, s, req.URL)
+
+		http.Redirect(res, req, "/", http.StatusTemporaryRedirect)
 	})
 
-	h.Handler = mux
+	r.PathPrefix("/").Headers("Connection", "Upgrade", "Upgrade", "websocket").HandlerFunc(NewWsProxyHandler())
+	r.PathPrefix("/").HandlerFunc(NewProxyHandler())
+
+	h.Handler = r
 	//
 
 	h.listener = l

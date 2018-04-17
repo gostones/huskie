@@ -194,7 +194,7 @@ func TunServer(port string) {
 //` + commonHelp
 
 func TunClient(proxy string, url string, remote string) {
-
+	log.Printf("proxy: %v url: %v remote: %v", proxy, url, remote)
 	//flags := flag.NewFlagSet("client", flag.ContinueOnError)
 	//
 	//fingerprint := flags.String("fingerprint", "", "")

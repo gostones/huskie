@@ -17,8 +17,24 @@ type RpcBot struct {
 	proxy string
 }
 
+func parseInt(s string, v int) int {
+	if s == "" {
+		return v
+	}
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		i = v
+	}
+	return i
+}
+
 func init() {
+	//TODO
 	url := os.Getenv("HUSKIE_URL")
+	if url == "" {
+		port := parseInt(os.Getenv("PORT"), 8080)
+		url = fmt.Sprintf("http://localhost:%v/tunnel", port)
+	}
 	proxy := os.Getenv("http_proxy")
 
 	RegisterRobot("rpc", func() (robot Robot) {

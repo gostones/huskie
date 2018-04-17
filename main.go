@@ -161,7 +161,8 @@ func connect(args []string) {
 		*url = os.Getenv("HUSKIE_URL")
 	}
 	if *url == "" {
-		*url = "http://localhost:8080/tunnel"
+		port := parseInt(os.Getenv("PORT"), 8080)
+		*url = fmt.Sprintf("http://localhost:%v/tunnel", port)
 	}
 
 	if *proxy == "" {
@@ -226,7 +227,8 @@ func puppy(args []string) {
 		*url = os.Getenv("HUSKIE_URL")
 	}
 	if *url == "" {
-		*url = "http://localhost:8080/tunnel"
+		port := parseInt(os.Getenv("PORT"), 8080)
+		*url = fmt.Sprintf("http://localhost:%v/tunnel", port)
 	}
 
 	if *proxy == "" {

@@ -9,6 +9,7 @@ package bot
 
 import (
 	"fmt"
+	"os"
 )
 
 //var (
@@ -21,7 +22,11 @@ import (
 //	check   = flag.Duration("c", 30*time.Second, "Duration between alive checks")
 //)
 
-func Server(user string, host string, port int) int {
+func Server(proxy string, url string, user string, host string, port int) int {
+	robots.ProxyUrl = proxy
+	robots.HuskieUrl = url
+
+	fmt.Fprintf(os.Stdout, "Bot server proxy: %v harness: %v\n", proxy, url)
 
 	addr := fmt.Sprintf("%s:%d", host, port)
 

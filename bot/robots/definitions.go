@@ -1,5 +1,10 @@
 package robots
 
+var (
+	ProxyUrl  string
+	HuskieUrl string
+)
+
 // Robot is the interface all robots must follow
 type Robot interface {
 	Run(*Command) string

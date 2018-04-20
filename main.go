@@ -253,7 +253,7 @@ func puppy(args []string) {
 	sleep := util.BackoffDuration()
 
 	for {
-		rc := bot.Server(user, "localhost", lport)
+		rc := bot.Server(*proxy, *url, user, "localhost", lport)
 		sleep(rc)
 	}
 }

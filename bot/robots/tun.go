@@ -12,15 +12,15 @@ import (
 	"time"
 )
 
-// RpcBot starts reverse proxy client
-type RpcBot struct {
+// TunBot creates a tunnel
+type TunBot struct {
 	url   string
 	proxy string
 }
 
 func init() {
 	RegisterRobot("rpc", func() (robot Robot) {
-		return &RpcBot{
+		return &TunBot{
 			url:   HuskieUrl,
 			proxy: ProxyUrl,
 		}
@@ -28,12 +28,12 @@ func init() {
 }
 
 // Run executes a command
-func (b RpcBot) Run(c *Command) string {
+func (b TunBot) Run(c *Command) string {
 	if len(c.Args) != 2 {
-		return "missing ports: service remote"
+		return "missing ports: local remote"
 	}
 
-	sport, err := strconv.Atoi(c.Args[0])
+	lport, err := strconv.Atoi(c.Args[0])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}
@@ -43,37 +43,26 @@ func (b RpcBot) Run(c *Command) string {
 		return fmt.Sprintf("%v", err)
 	}
 
-	go b.tun(sport, rport)
+	go b.tun(lport, rport)
 
-	return fmt.Sprintf("Started service: %v remote: %v", sport, rport)
+	return fmt.Sprintf("Started local: %v remote: %v", lport, rport)
 }
 
 // Description describes what the robot does
-func (b RpcBot) Description() string {
-	return "rpc service_port remote_port"
+func (b TunBot) Description() string {
+	return "tun local_port remote_port"
 }
 
-func (b RpcBot) tun(sport, rport int) {
-	lport := util.FreePort()
+func (b TunBot) tun(lport, rport int) {
 
-	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, 8000)
+	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, rport)
 
-	go b.tunClient(b.proxy, b.url, remote)
+	fmt.Fprintf(os.Stdout, "remote: %v proxy: %v url: %v\n", remote, b.proxy, b.url)
 
-	fmt.Fprintf(os.Stdout, "service: %v remote: %v proxy: %v url: %v\n", sport, remote, b.proxy, b.url)
-
-	sleep := util.BackoffDuration()
-
-	for {
-		rc := rp.Client(fmt.Sprintf(rpc, lport, rport, sport, rport))
-		if rc == 0 {
-			return
-		}
-		sleep(rc)
-	}
+	b.tunClient(b.proxy, b.url, remote)
 }
 
-func (b RpcBot) tunClient(proxy string, url string, remote string) {
+func (b TunBot) tunClient(proxy string, url string, remote string) {
 
 	keepalive := time.Duration(12 * time.Second)
 

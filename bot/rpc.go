@@ -1,8 +1,7 @@
-package robots
+package bot
 
 import (
 	"fmt"
-	"github.com/gostones/huskie/bot"
 	"github.com/gostones/huskie/rp"
 	"github.com/gostones/huskie/util"
 	"github.com/jpillora/chisel/client"
@@ -50,7 +49,7 @@ func (b RpcBot) Run(c *Command) string {
 
 // Description describes what the robot does
 func (b RpcBot) Description() string {
-	return "rpc service_port remote_port"
+	return "service_port remote_port"
 }
 
 func (b RpcBot) tun(sport, rport int) {

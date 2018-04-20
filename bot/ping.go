@@ -1,4 +1,4 @@
-package robots
+package bot
 
 // PingBot is a simple ping/pong bot
 type PingBot struct{}

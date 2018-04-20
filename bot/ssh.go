@@ -1,4 +1,4 @@
-package robots
+package bot
 
 import (
 	"fmt"
@@ -42,7 +42,7 @@ func (b SshBot) Run(c *Command) string {
 
 // Description describes what the robot does
 func (b SshBot) Description() string {
-	return "<something>"
+	return "bind_port"
 }
 
 func setWinsize(f *os.File, w, h int) {

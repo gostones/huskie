@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/gostones/huskie/bot/robots"
 	"golang.org/x/crypto/ssh"
 	"io"
 	"net"
@@ -87,7 +86,7 @@ func Bot(user string, addr string) error {
 			fmt.Printf("json error: %v\n", err)
 		} else {
 			cmdline := strings.Split(cm.Msg, " ")
-			cmd := &robots.Command{
+			cmd := &Command{
 				From:    cm.From,
 				Command: cmdline[0],
 				Args:    cmdline[1:],
@@ -192,8 +191,8 @@ func dial(addr, user string) (*ssh.Client, error) {
 	})
 }
 
-func getRobot(command string) (robots.Robot, error) {
-	if robotInitFunction, ok := robots.Robots[command]; ok {
+func getRobot(command string) (Robot, error) {
+	if robotInitFunction, ok := Robots[command]; ok {
 		return robotInitFunction(), nil
 	}
 

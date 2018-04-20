@@ -23,8 +23,8 @@ import (
 //)
 
 func Server(proxy string, url string, user string, host string, port int) int {
-	robots.ProxyUrl = proxy
-	robots.HuskieUrl = url
+	ProxyUrl = proxy
+	HuskieUrl = url
 
 	fmt.Fprintf(os.Stdout, "Bot server proxy: %v harness: %v\n", proxy, url)
 

@@ -1,10 +1,7 @@
-package robots
+package bot
 
 import (
 	"fmt"
-	"github.com/gostones/huskie/bot"
-	"github.com/gostones/huskie/rp"
-	"github.com/gostones/huskie/util"
 	"github.com/jpillora/chisel/client"
 	"log"
 	"os"
@@ -19,7 +16,7 @@ type TunBot struct {
 }
 
 func init() {
-	RegisterRobot("rpc", func() (robot Robot) {
+	RegisterRobot("tun", func() (robot Robot) {
 		return &TunBot{
 			url:   HuskieUrl,
 			proxy: ProxyUrl,
@@ -50,7 +47,7 @@ func (b TunBot) Run(c *Command) string {
 
 // Description describes what the robot does
 func (b TunBot) Description() string {
-	return "tun local_port remote_port"
+	return "local_port remote_port"
 }
 
 func (b TunBot) tun(lport, rport int) {

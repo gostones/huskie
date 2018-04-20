@@ -1,4 +1,4 @@
-package robots
+package bot
 
 import (
 	"fmt"
@@ -33,5 +33,5 @@ func (b CriBot) Run(c *Command) string {
 
 // Description describes what the robot does
 func (b CriBot) Description() string {
-	return "<something>"
+	return "bind_port"
 }

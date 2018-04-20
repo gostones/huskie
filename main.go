@@ -19,8 +19,7 @@ var help = `
 
 	Commands:
 		harness - server mode
-		pup     - worker mode (docker instance)
-		whistle - messaging service
+		pup     - worker / docker
 		mush    - control agent
 `
 
@@ -44,8 +43,6 @@ func main() {
 	switch subcmd {
 	case "harness":
 		harness(args)
-	case "whistle":
-		whistle(args)
 	case "pup":
 		puppy(args)
 	case "mush":
@@ -128,10 +125,6 @@ func harness(args []string) {
 	go ssh.Server(*sport, "bash")
 
 	tunnel.TunServer(fmt.Sprintf("%v", *bind))
-}
-
-func whistle(args []string) {
-	connect(args)
 }
 
 func mush(args []string) {

@@ -1,4 +1,4 @@
-package robots
+package bot
 
 var (
 	ProxyUrl  string

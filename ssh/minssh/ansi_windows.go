@@ -279,7 +279,7 @@ func (ar *ansiReader) Read(b []byte) (n int, err error) {
 			ne := utf8.EncodeRune(b[len(b):cap(b)], r)
 			b = b[:len(b)+ne]
 		case mouseEvent, windowBufferSizeEvent, focusEvent, menuEvent:
-			// just ignore, do nothing
+		// just ignore, do nothing
 		default:
 			// unknown event, do nothing
 		}

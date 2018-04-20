@@ -96,103 +96,103 @@
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/assets",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/assets/statik",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/client",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/models/config",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/models/consts",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/models/msg",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/models/plugin",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/models/proto/udp",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/server",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/crypto",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/errors",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/io",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/log",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/metric",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/net",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/pool",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/shutdown",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/util",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/version",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/frp/utils/vhost",
-			"Comment": "v0.16.0-11-g9bd359d",
-			"Rev": "9bd359d11ad65c8ad5d92a1cd4922b98c07ae54a"
+			"Comment": "v0.16.1-1-g8c34e14",
+			"Rev": "8c34e14098a88edc0529031ee7597d03eb62b4e8"
 		},
 		{
 			"ImportPath": "github.com/fatedier/kcp-go",
@@ -205,8 +205,8 @@
 		},
 		{
 			"ImportPath": "github.com/gliderlabs/ssh",
-			"Comment": "v0.1.0-29-gce31f3c",
-			"Rev": "ce31f3cc47feee0c38db7ecfaa154026929ffbda"
+			"Comment": "v0.1.0-31-gd6295a6",
+			"Rev": "d6295a6cbc4b9b1a2486ff1881d97f519db189fd"
 		},
 		{
 			"ImportPath": "github.com/go-ole/go-ole",
@@ -224,33 +224,33 @@
 		},
 		{
 			"ImportPath": "github.com/gorilla/websocket",
-			"Comment": "v1.2.0-6-ga69d9f6",
-			"Rev": "a69d9f6de432e2c6b296a947d8a5ee88f68522cf"
+			"Comment": "v1.2.0-38-geb92580",
+			"Rev": "eb925808374e5ca90c83401a40d711dc08c0c0f6"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat",
-			"Comment": "v1.7-3-gb9f4d5e",
-			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
+			"Comment": "v1.7-2-g1e38460",
+			"Rev": "1e384603952e3d6ed23e1059ccae024bbfc534d3"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/chat",
-			"Comment": "v1.7-3-gb9f4d5e",
-			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
+			"Comment": "v1.7-2-g1e38460",
+			"Rev": "1e384603952e3d6ed23e1059ccae024bbfc534d3"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/chat/message",
-			"Comment": "v1.7-3-gb9f4d5e",
-			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
+			"Comment": "v1.7-2-g1e38460",
+			"Rev": "1e384603952e3d6ed23e1059ccae024bbfc534d3"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/set",
-			"Comment": "v1.7-3-gb9f4d5e",
-			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
+			"Comment": "v1.7-2-g1e38460",
+			"Rev": "1e384603952e3d6ed23e1059ccae024bbfc534d3"
 		},
 		{
 			"ImportPath": "github.com/gostones/ssh-chat/sshd",
-			"Comment": "v1.7-3-gb9f4d5e",
-			"Rev": "b9f4d5e689fb4bcd2a5f15afe39de063510a8c05"
+			"Comment": "v1.7-2-g1e38460",
+			"Rev": "1e384603952e3d6ed23e1059ccae024bbfc534d3"
 		},
 		{
 			"ImportPath": "github.com/howeyc/gopass",
@@ -275,13 +275,13 @@
 		},
 		{
 			"ImportPath": "github.com/jpillora/chisel/client",
-			"Comment": "1.2.3-1-g40af386",
-			"Rev": "40af386686a3320c48c8a42ac3c7b7c618c7184e"
+			"Comment": "1.2.3-1-g5dfeaa2",
+			"Rev": "5dfeaa24d3557bf13b2b5b087f441668bdf79f76"
 		},
 		{
 			"ImportPath": "github.com/jpillora/chisel/share",
-			"Comment": "1.2.3-1-g40af386",
-			"Rev": "40af386686a3320c48c8a42ac3c7b7c618c7184e"
+			"Comment": "1.2.3-1-g5dfeaa2",
+			"Rev": "5dfeaa24d3557bf13b2b5b087f441668bdf79f76"
 		},
 		{
 			"ImportPath": "github.com/jpillora/requestlog",
@@ -303,22 +303,22 @@
 		},
 		{
 			"ImportPath": "github.com/klauspost/cpuid",
-			"Comment": "v1.1-4-ge7e905e",
-			"Rev": "e7e905edc00ea8827e58662220139109efea09db"
+			"Comment": "v1.1",
+			"Rev": "ae7887de9fa5d2db4eaa8174a7eff2c1ac00f2da"
 		},
 		{
 			"ImportPath": "github.com/klauspost/reedsolomon",
-			"Comment": "v1.6-6-g0b30fa7",
-			"Rev": "0b30fa71cc8e4e9010c9aba6d0320e2e5b163b29"
+			"Comment": "v1.5",
+			"Rev": "87ba8262ab3d167ae4d38e22796312cd2a9d0b19"
 		},
 		{
 			"ImportPath": "github.com/koding/websocketproxy",
-			"Rev": "14d189e9f3df43330910b3642dd44a019d3534a5"
+			"Rev": "7338eeab09f30467d09fd12ae4ad0ccee0121ab1"
 		},
 		{
 			"ImportPath": "github.com/kr/pty",
-			"Comment": "v1.1.1",
-			"Rev": "282ce0e5322c82529687d609ee670fac7c7d917c"
+			"Comment": "v1.0.0",
+			"Rev": "2c10821df3c3cf905230d078702dfbe9404c9b23"
 		},
 		{
 			"ImportPath": "github.com/mitchellh/go-homedir",
@@ -330,28 +330,28 @@
 		},
 		{
 			"ImportPath": "github.com/moul/ssh2docker",
-			"Comment": "v1.2.0-63-g0af12b0",
-			"Rev": "0af12b04bfe3a4a83d8cc01095f9bd6aee1c6719"
+			"Comment": "v1.2.0-61-gc61c206",
+			"Rev": "c61c2066bb6d9768965fbe3c372440de1be5af52"
 		},
 		{
 			"ImportPath": "github.com/moul/ssh2docker/pkg/dockerhelper",
-			"Comment": "v1.2.0-63-g0af12b0",
-			"Rev": "0af12b04bfe3a4a83d8cc01095f9bd6aee1c6719"
+			"Comment": "v1.2.0-61-gc61c206",
+			"Rev": "c61c2066bb6d9768965fbe3c372440de1be5af52"
 		},
 		{
 			"ImportPath": "github.com/moul/ssh2docker/pkg/envhelper",
-			"Comment": "v1.2.0-63-g0af12b0",
-			"Rev": "0af12b04bfe3a4a83d8cc01095f9bd6aee1c6719"
+			"Comment": "v1.2.0-61-gc61c206",
+			"Rev": "c61c2066bb6d9768965fbe3c372440de1be5af52"
 		},
 		{
 			"ImportPath": "github.com/moul/ssh2docker/pkg/sysloghandler",
-			"Comment": "v1.2.0-63-g0af12b0",
-			"Rev": "0af12b04bfe3a4a83d8cc01095f9bd6aee1c6719"
+			"Comment": "v1.2.0-61-gc61c206",
+			"Rev": "c61c2066bb6d9768965fbe3c372440de1be5af52"
 		},
 		{
 			"ImportPath": "github.com/moul/ssh2docker/pkg/ttyhelper",
-			"Comment": "v1.2.0-63-g0af12b0",
-			"Rev": "0af12b04bfe3a4a83d8cc01095f9bd6aee1c6719"
+			"Comment": "v1.2.0-61-gc61c206",
+			"Rev": "c61c2066bb6d9768965fbe3c372440de1be5af52"
 		},
 		{
 			"ImportPath": "github.com/parnurzeal/gorequest",
@@ -365,8 +365,8 @@
 		},
 		{
 			"ImportPath": "github.com/pkg/errors",
-			"Comment": "v0.8.0-12-g816c908",
-			"Rev": "816c9085562cd7ee03e7f8188a1cfd942858cded"
+			"Comment": "v0.8.0-5-gc605e28",
+			"Rev": "c605e284fe17294bda444b34710735b29d1a9d90"
 		},
 		{
 			"ImportPath": "github.com/rakyll/statik/fs",
@@ -452,8 +452,8 @@
 		},
 		{
 			"ImportPath": "github.com/templexxx/xor",
-			"Comment": "0.1.2",
-			"Rev": "0af8e873c554da75f37f2049cdffda804533d44c"
+			"Comment": "0.1.0-1-g42f9c04",
+			"Rev": "42f9c041c330b560afb991153bf183c25444bcdc"
 		},
 		{
 			"ImportPath": "github.com/tjfoc/gmsm/sm4",
@@ -470,129 +470,129 @@
 		},
 		{
 			"ImportPath": "github.com/xtaci/kcp-go",
-			"Comment": "v3.24",
-			"Rev": "42bc1dfefff592fdb3affa793980c4f6ab4213e5"
+			"Comment": "v3.18-1-gedee1a2",
+			"Rev": "edee1a2ac671902c61557b323985202430bf006e"
 		},
 		{
 			"ImportPath": "github.com/xtaci/smux",
-			"Comment": "v1.0.7",
-			"Rev": "e28719eede1ac5714cf0b06ba2f403125864ebe0"
+			"Comment": "v1.0.5-9-gebec7ef",
+			"Rev": "ebec7ef2574b42a7088cd7751176483e0a27d458"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/blowfish",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/cast5",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/curve25519",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/ed25519",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/ed25519/internal/edwards25519",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/openpgp",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/openpgp/armor",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/openpgp/elgamal",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/openpgp/errors",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/openpgp/packet",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/openpgp/s2k",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/pbkdf2",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/salsa20",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/salsa20/salsa",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/ssh",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/ssh/agent",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/ssh/knownhosts",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/ssh/terminal",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/tea",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/twofish",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/xtea",
-			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		},
 		{
 			"ImportPath": "golang.org/x/net/bpf",
-			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+			"Rev": "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
-			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+			"Rev": "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
 		},
 		{
 			"ImportPath": "golang.org/x/net/internal/iana",
-			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+			"Rev": "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
 		},
 		{
 			"ImportPath": "golang.org/x/net/internal/socket",
-			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+			"Rev": "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
 		},
 		{
 			"ImportPath": "golang.org/x/net/ipv4",
-			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+			"Rev": "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
 		},
 		{
 			"ImportPath": "golang.org/x/net/publicsuffix",
-			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+			"Rev": "61147c48b25b599e5b561d2e9c4f3e1ef489ca41"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/unix",
-			"Rev": "a3f2cbd54cf5dfe3fbaccf76375fdb12f67654c8"
+			"Rev": "3b87a42e500a6dc65dae1a55d0b641295971163e"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/windows",
-			"Rev": "a3f2cbd54cf5dfe3fbaccf76375fdb12f67654c8"
+			"Rev": "3b87a42e500a6dc65dae1a55d0b641295971163e"
 		},
 		{
 			"ImportPath": "golang.org/x/text/transform",
@@ -833,6 +833,14 @@
 			"ImportPath": "gopkg.in/warnings.v0",
 			"Comment": "v0.1.2",
 			"Rev": "ec4a0fea49c7b46c2aeb0b51aac55779c607e52b"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/internal/chacha20",
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/poly1305",
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 		}
 	]
 }

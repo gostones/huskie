@@ -11,6 +11,20 @@ import (
 	"time"
 )
 
+//server_port, instance, service_host, service_port, remote_port
+var rpc = `
+[common]
+server_addr = localhost
+server_port = %v
+http_proxy =
+
+[rpc%v]
+type = tcp
+local_ip = %v
+local_port = %v
+remote_port = %v
+`
+
 // RpcBot starts reverse proxy client
 type RpcBot struct {
 	url   string
@@ -28,21 +42,23 @@ func init() {
 
 // Run executes a command
 func (b RpcBot) Run(c *Command) string {
-	if len(c.Args) != 2 {
-		return "missing ports: service remote"
+	if len(c.Args) != 3 {
+		return "missing args: host port remote_port"
 	}
 
-	sport, err := strconv.Atoi(c.Args[0])
+	shost := c.Args[0]
+
+	sport, err := strconv.Atoi(c.Args[1])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}
 
-	rport, err := strconv.Atoi(c.Args[1])
+	rport, err := strconv.Atoi(c.Args[2])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}
 
-	go b.tun(sport, rport)
+	go b.tun(shost, sport, rport)
 
 	return fmt.Sprintf("Started service: %v remote: %v", sport, rport)
 }
@@ -52,7 +68,7 @@ func (b RpcBot) Description() string {
 	return "service_port remote_port"
 }
 
-func (b RpcBot) tun(sport, rport int) {
+func (b RpcBot) tun(shost string, sport int, rport int) {
 	lport := util.FreePort()
 
 	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, 8000)
@@ -64,7 +80,7 @@ func (b RpcBot) tun(sport, rport int) {
 	sleep := util.BackoffDuration()
 
 	for {
-		rc := rp.Client(fmt.Sprintf(rpc, lport, rport, sport, rport))
+		rc := rp.Client(fmt.Sprintf(rpc, lport, rport, shost, sport, rport))
 		if rc == 0 {
 			return
 		}

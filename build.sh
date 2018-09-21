@@ -4,14 +4,21 @@
 [[ $DEBUG ]] && FLAG="-x"
 
 function build() {
-    mkdir -p bin
-    rm -rf bin/*
-
     echo "## Cleaning ..."
     go clean $FLAG ./...
 
+    echo "## Formatting ..."
+    go fmt $FLAG ./...; if [ $? -ne 0 ]; then
+        return 1
+    fi
+    
     echo "## Vetting ..."
     go vet $FLAG ./...; if [ $? -ne 0 ]; then
+        return 1
+    fi
+
+    echo "## Testing ..."
+    go test $FLAG ./...; if [ $? -ne 0 ]; then
         return 1
     fi
 
@@ -20,11 +27,6 @@ function build() {
 #        return 1
 #    fi
     go build $FLAG -buildmode=exe -o bin/huskie; if [ $? -ne 0 ]; then
-        return 1
-    fi
-
-    echo "## Testing ..."
-    go test $FLAG ./...; if [ $? -ne 0 ]; then
         return 1
     fi
 }

@@ -19,7 +19,7 @@ var help = `
 
 	Commands:
 		harness - server mode
-		pup     - worker / docker
+		pup     - worker
 		mush    - control agent
 `
 

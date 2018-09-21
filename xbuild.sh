@@ -16,9 +16,6 @@ function xbuild() {
 }
 
 function build() {
-    mkdir -p bin
-    rm -rf bin/*
-
     echo "## Cleaning ..."
     go clean $FLAG ./...
 

@@ -48,9 +48,13 @@ func main() {
 	case "mush":
 		mush(args)
 	default:
-		fmt.Fprintf(os.Stderr, help)
-		os.Exit(1)
+		usage()
 	}
+}
+
+func usage() {
+	fmt.Fprintf(os.Stderr, help)
+	os.Exit(1)
 }
 
 //func genUser(rand int) string {
@@ -66,59 +70,35 @@ var huskiePort = 2022
 func harness(args []string) {
 	flags := flag.NewFlagSet("server", flag.ContinueOnError)
 
-	b := flags.Int("b", -1, "")
-	bind := flags.Int("bind", -1, "")
+	//tunnel port
+	bind := flags.Int("bind", parseInt(os.Getenv("PORT"), 8080), "")
 
-	p := flags.Int("p", -1, "")
-	port := flags.Int("port", -1, "")
+	//chat port
+	port := flags.Int("port", parseInt(os.Getenv("HUSKIE_PORT"), huskiePort), "")
+	ident := flags.String("identity", os.Getenv("HUSKIE_IDENTITY"), "")
 
-	i := flags.String("i", "", "")
-	ident := flags.String("identity", "", "")
-
-	v := flags.Bool("v", false, "")
+	v := flags.Bool("verbose", false, "")
 
 	rport := flags.Int("rps", 8000, "")
-
 	sport := flags.Int("ssh", 8022, "")
 
 	flags.Parse(args)
 
 	//
 	args = []string{}
-
-	if *bind == -1 {
-		*bind = *b
-	}
-	if *bind == -1 {
-		*bind = parseInt(os.Getenv("PORT"), 8080)
-	}
-
-	if *port == -1 {
-		*port = *p
-	}
-	if *port == -1 {
-		*port = parseInt(os.Getenv("HUSKIE_PORT"), huskiePort)
-	}
-
 	args = append(args, "--bind", fmt.Sprintf(":%v", *port))
 
-	if *ident == "" {
-		*ident = *i
-	}
-	if *ident == "" {
-		*ident = os.Getenv("HUSKIE_IDENTITY")
-	}
 	if *ident == "" {
 		*ident = "host_key"
 		util.RsaKeyPair(*ident)
 	}
-
 	args = append(args, "--identity", *ident)
 
 	if *v {
 		args = append(args, "-v")
 	}
 
+	//
 	go chat.Server(args)
 
 	go rp.Server(fmt.Sprintf(rps, *rport))
@@ -128,53 +108,23 @@ func harness(args []string) {
 }
 
 func mush(args []string) {
-	connect(args)
-}
-
-func connect(args []string) {
 	flags := flag.NewFlagSet("connect", flag.ContinueOnError)
 
-	p := flags.Int("p", -1, "")
-	port := flags.Int("port", -1, "")
-
-	i := flags.String("i", "", "")
-	ident := flags.String("identity", "", "")
-
-	u := flags.String("u", "", "")
-	url := flags.String("url", "", "")
-
+	port := flags.Int("port", parseInt(os.Getenv("HUSKIE_PORT"), huskiePort), "")
+	ident := flags.String("identity", os.Getenv("HUSKIE_IDENTITY"), "")
+	url := flags.String("url", os.Getenv("HUSKIE_URL"), "")
 	proxy := flags.String("proxy", "", "")
 
 	flags.Parse(args)
 
 	if *url == "" {
-		*url = *u
-	}
-	if *url == "" {
-		*url = os.Getenv("HUSKIE_URL")
-	}
-	if *url == "" {
-		port := parseInt(os.Getenv("PORT"), 8080)
-		*url = fmt.Sprintf("http://localhost:%v/tunnel", port)
+		usage()
 	}
 
 	if *proxy == "" {
 		*proxy = os.Getenv("http_proxy")
 	}
 
-	if *port == -1 {
-		*port = *p
-	}
-	if *port == -1 {
-		*port = parseInt(os.Getenv("HUSKIE_PORT"), huskiePort)
-	}
-
-	if *ident == "" {
-		*ident = *i
-	}
-	if *ident == "" {
-		*ident = os.Getenv("HUSKIE_IDENTITY")
-	}
 	if *ident == "" {
 		*ident = "host_key"
 		util.RsaKeyPair(*ident)
@@ -185,10 +135,10 @@ func connect(args []string) {
 
 	fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", lport, *port)
 
+	//
 	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, *port)
 	go tunnel.TunClient(*proxy, *url, remote)
 
-	//
 	args = []string{"--p", fmt.Sprintf("%v", lport), "--i", *ident, "localhost"}
 	sleep := util.BackoffDuration()
 	for {
@@ -203,42 +153,23 @@ func connect(args []string) {
 func puppy(args []string) {
 	flags := flag.NewFlagSet("puppy", flag.ContinueOnError)
 
-	p := flags.Int("p", -1, "")
-	port := flags.Int("port", -1, "")
-
-	u := flags.String("u", "", "")
-	url := flags.String("url", "", "")
-
-	proxy := flags.String("proxy", "", "")
+	port := flags.Int("port", parseInt(os.Getenv("HUSKIE_PORT"), 2022), "")
+	url := flags.String("url", os.Getenv("HUSKIE_URL"), "")
+	proxy := flags.String("proxy", os.Getenv("http_proxy"), "")
+	config := flags.String("config", "", "")
 
 	flags.Parse(args)
 
 	if *url == "" {
-		*url = *u
-	}
-	if *url == "" {
-		*url = os.Getenv("HUSKIE_URL")
-	}
-	if *url == "" {
-		port := parseInt(os.Getenv("PORT"), 8080)
-		*url = fmt.Sprintf("http://localhost:%v/tunnel", port)
-	}
-
-	if *proxy == "" {
-		*proxy = os.Getenv("http_proxy")
+		usage()
 	}
 
 	//
-	if *port == -1 {
-		*port = *p
-	}
-	if *port == -1 {
-		*port = parseInt(os.Getenv("HUSKIE_PORT"), 2022)
-	}
-
 	lport := util.FreePort()
 	user := fmt.Sprintf("puppy%v", lport)
+
 	fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
+	fmt.Fprintf(os.Stdout, "config: %v", config)
 
 	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, *port)
 	go tunnel.TunClient(*proxy, *url, remote)

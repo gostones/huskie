@@ -22,6 +22,8 @@ github.com/emirpasic/gods v1.9.0 h1:rUF4PuzEjMChMiNsVjdI+SyLu7rEqpQ5reNFnhC7oFo=
 github.com/emirpasic/gods v1.9.0/go.mod h1:YfzfFFoVP/catgzJb4IKIqXjX78Ha8FMSDh3ymbK86o=
 github.com/fatedier/beego v0.0.0-20171024143340-6c6a4f5bd5eb h1:wCrNShQidLmvVWn/0PikGmpdP0vtQmnvyRg3ZBEhczw=
 github.com/fatedier/beego v0.0.0-20171024143340-6c6a4f5bd5eb/go.mod h1:wx3gB6dbIfBRcucp94PI9Bt3I0F2c/MyNEWuhzpWiwk=
+github.com/fatedier/beego v1.7.2 h1:kVw3oKiXccInqG+Z/7l8zyRQXrsCQEfcUxgzfGK+R8g=
+github.com/fatedier/beego v1.7.2/go.mod h1:wx3gB6dbIfBRcucp94PI9Bt3I0F2c/MyNEWuhzpWiwk=
 github.com/fatedier/frp v0.16.1 h1:HFpkubWAqkXm9Hm4Z9UE4XpIdXs7I55hTur/UKd12oQ=
 github.com/fatedier/frp v0.16.1/go.mod h1:NziSLqdyUh1UCZQttyQB5p1TYCuzfqZfUaWRliDC9Fk=
 github.com/fatedier/kcp-go v0.0.0-20171023144637-cd167d2f15f4 h1:XuS6coANzf+8ASMn8i9ugOAeUO54l7qMQSmLtFFhj8A=
@@ -77,6 +79,8 @@ github.com/pkg/errors v0.0.0-20180311214515-816c9085562c h1:F5RoIh7F9wB47PvXvpP1
 github.com/pkg/errors v0.0.0-20180311214515-816c9085562c/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/rakyll/statik v0.0.0-20180330204314-fcdcb7b85139 h1:8owEqJayVxrfiBTllEcxPNLn9UzjX9NAX+9tTtflE94=
 github.com/rakyll/statik v0.0.0-20180330204314-fcdcb7b85139/go.mod h1:OEi9wJV/fMUAGx1eNjq75DKDsJVuEv1U0oYdX6GX8Zs=
+github.com/rakyll/statik v0.1.5 h1:Ly2UjURzxnsSYS0zI50fZ+srA+Fu7EbpV5hglvJvJG0=
+github.com/rakyll/statik v0.1.5/go.mod h1:OEi9wJV/fMUAGx1eNjq75DKDsJVuEv1U0oYdX6GX8Zs=
 github.com/sergi/go-diff v1.0.0 h1:Kpca3qRNrduNnOQeazBd0ysaKrUJiIuISHxogkT9RPQ=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
 github.com/shazow/rateio v0.0.0-20150116013248-e8e00881e5c1 h1:Lx3BlDGFElJt4u/zKc9A3BuGYbQAGlEFyPuUA3jeMD0=
@@ -94,6 +98,8 @@ github.com/templexxx/xor v0.0.0-20170926022130-0af8e873c554 h1:pexgSe+JCFuxG+uoM
 github.com/templexxx/xor v0.0.0-20170926022130-0af8e873c554/go.mod h1:5XA7W9S6mni3h5uvOC75dA3m9CCCaS83lltmc0ukdi4=
 github.com/tjfoc/gmsm v0.0.0-20180404022540-0effa9db1ba8 h1:4TKyZMMzeC35m5MBzr1ugzaSYcziTv/79c1a2BPE0ek=
 github.com/tjfoc/gmsm v0.0.0-20180404022540-0effa9db1ba8/go.mod h1:XxO4hdhhrzAd+G4CjDqaOkd0hUzmtPR/d3EiBBMn/wc=
+github.com/tjfoc/gmsm v1.0.1 h1:R11HlqhXkDospckjZEihx9SW/2VW0RgdwrykyWMFOQU=
+github.com/tjfoc/gmsm v1.0.1/go.mod h1:XxO4hdhhrzAd+G4CjDqaOkd0hUzmtPR/d3EiBBMn/wc=
 github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec h1:DGmKwyZwEB8dI7tbLt/I/gQuP559o/0FrAkHKlQM/Ks=
 github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec/go.mod h1:owBmyHYMLkxyrugmfwE/DLJyW8Ro9mkphwuVErQ0iUw=
 github.com/xanzy/ssh-agent v0.1.0 h1:lOhdXLxtmYjaHc76ZtNmJWPg948y/RnT+3N3cvKWFzY=
@@ -108,6 +114,7 @@ golang.org/x/crypto v0.0.0-20180411161317-d6449816ce06 h1:EOqG0JqGlLr+punVB69jvW
 golang.org/x/crypto v0.0.0-20180411161317-d6449816ce06/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/net v0.0.0-20170828231752-66aacef3dd8a h1:DZGc/od29xzgmdBTGZL3zqLaoHS0O+qdIEYJNkOxDKM=
 golang.org/x/net v0.0.0-20170828231752-66aacef3dd8a/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/net v0.0.0-20180921000356-2f5d2388922f h1:QM2QVxvDoW9PFSPp/zy9FgxJLfaWTZlS61KEPtBwacM=
 golang.org/x/sys v0.0.0-20180104162908-a3f2cbd54cf5 h1:6Od77Y9QsEwa/MFtLV5Oyv3/z8z7CSga7Qzdkg8VUKE=
 golang.org/x/sys v0.0.0-20180104162908-a3f2cbd54cf5/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=

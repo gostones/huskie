@@ -83,7 +83,7 @@ func Bot(user string, addr string) error {
 		cm := ChatMessage{}
 		err := json.Unmarshal([]byte(line), &cm)
 		if err != nil {
-			fmt.Printf("json error: %v\n", err)
+			fmt.Printf("json error: %v %v\n", err, line)
 		} else {
 			cmdline := strings.Split(cm.Msg, " ")
 			cmd := &Command{

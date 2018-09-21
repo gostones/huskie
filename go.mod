@@ -10,7 +10,7 @@ require (
 	github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
 	github.com/codegangsta/cli v0.0.0-20180226030253-8e01ec4cd3e2
 	github.com/emirpasic/gods v1.9.0
-	github.com/fatedier/beego v0.0.0-20171024143340-6c6a4f5bd5eb
+	github.com/fatedier/beego v1.7.2
 	github.com/fatedier/frp v0.16.1
 	github.com/fatedier/kcp-go v0.0.0-20171023144637-cd167d2f15f4
 	github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568
@@ -40,7 +40,7 @@ require (
 	github.com/parnurzeal/gorequest v0.0.0-20171015110455-8e3aed27fe49
 	github.com/pelletier/go-buffruneio v0.2.0
 	github.com/pkg/errors v0.0.0-20180311214515-816c9085562c
-	github.com/rakyll/statik v0.0.0-20180330204314-fcdcb7b85139
+	github.com/rakyll/statik v0.1.5
 	github.com/sergi/go-diff v1.0.0
 	github.com/shazow/rateio v0.0.0-20150116013248-e8e00881e5c1
 	github.com/shirou/gopsutil v0.0.0-20180406082613-cd915bdc3158
@@ -49,7 +49,7 @@ require (
 	github.com/templexxx/cpufeat v0.0.0-20170927014610-3794dfbfb047
 	github.com/templexxx/reedsolomon v0.0.0-20170927015403-7092926d7d05
 	github.com/templexxx/xor v0.0.0-20170926022130-0af8e873c554
-	github.com/tjfoc/gmsm v0.0.0-20180404022540-0effa9db1ba8
+	github.com/tjfoc/gmsm v1.0.1
 	github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec
 	github.com/xanzy/ssh-agent v0.1.0
 	github.com/xtaci/kcp-go v0.0.0-20180203133237-42bc1dfefff5

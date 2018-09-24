@@ -153,10 +153,14 @@ func mush(args []string) {
 func puppy(args []string) {
 	flags := flag.NewFlagSet("puppy", flag.ContinueOnError)
 
+	lport := util.FreePort()
+
 	port := flags.Int("port", parseInt(os.Getenv("HUSKIE_PORT"), 2022), "")
 	url := flags.String("url", os.Getenv("HUSKIE_URL"), "")
 	proxy := flags.String("proxy", os.Getenv("http_proxy"), "")
-	config := flags.String("config", "", "")
+	user := flags.String("user", fmt.Sprintf("pup%v", lport), "")
+	name := flags.String("name", "bot", "")
+	service := flags.String("type", "bot", "")
 
 	flags.Parse(args)
 
@@ -165,11 +169,9 @@ func puppy(args []string) {
 	}
 
 	//
-	lport := util.FreePort()
-	user := fmt.Sprintf("puppy%v", lport)
 
 	fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
-	fmt.Fprintf(os.Stdout, "config: %v", config)
+	fmt.Fprintf(os.Stdout, "name: %v type: %v", name, service)
 
 	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, *port)
 	go tunnel.TunClient(*proxy, *url, remote)
@@ -177,7 +179,7 @@ func puppy(args []string) {
 	sleep := util.BackoffDuration()
 
 	for {
-		rc := bot.Server(*proxy, *url, user, "localhost", lport)
+		rc := bot.Server(*proxy, *url, *user, *name, *service, "localhost", lport)
 		sleep(rc)
 	}
 }

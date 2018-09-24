@@ -23,7 +23,7 @@ type ChatMessage struct {
 var active = false
 
 // Bot runs the bot
-func Bot(user string, addr string) error {
+func Bot(user string, name string, service string, addr string) error {
 	conn, err := dial(addr, user)
 	if err != nil {
 		return err
@@ -49,7 +49,7 @@ func Bot(user string, addr string) error {
 		return err
 	}
 
-	err = session.RequestPty("xterm", 80, 40, ssh.TerminalModes{})
+	err = session.RequestPty("xterm", 80, 256, ssh.TerminalModes{})
 	if err != nil {
 		return err
 	}
@@ -57,8 +57,19 @@ func Bot(user string, addr string) error {
 	delay := 5 * time.Second
 
 	go func() {
-		time.Sleep(delay)
-		in.Write([]byte("/me now active\r\n"))
+		me := fmt.Sprintf(`/me "name: %v, type: %v, connect: %v, status: on"`, name, service, addr) 
+		fmt.Println("Sending me detail: ", me)
+
+		for {
+			_, err := in.Write([]byte(me + "\r\n"))
+			
+			if err == nil {
+				break;
+			}
+
+			time.Sleep(delay)
+		}
+
 		active = true
 	}()
 
@@ -83,7 +94,7 @@ func Bot(user string, addr string) error {
 		cm := ChatMessage{}
 		err := json.Unmarshal([]byte(line), &cm)
 		if err != nil {
-			fmt.Printf("json error: %v %v\n", err, line)
+			fmt.Printf("TODO: %v\r\n", line)
 		} else {
 			cmdline := strings.Split(cm.Msg, " ")
 			cmd := &Command{

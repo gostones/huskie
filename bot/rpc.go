@@ -42,18 +42,18 @@ func init() {
 
 // Run executes a command
 func (b RpcBot) Run(c *Command) string {
-	if len(c.Args) != 3 {
-		return "missing args: host port remote_port"
-	}
+	// if len(c.Args) != 3 {
+	// 	return "missing args: host port remote_port"
+	// }
 
-	shost := c.Args[0]
+	shost := c.Msg["host"]
 
-	sport, err := strconv.Atoi(c.Args[1])
+	sport, err := strconv.Atoi(c.Msg["port"])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}
 
-	rport, err := strconv.Atoi(c.Args[2])
+	rport, err := strconv.Atoi(c.Msg["remote_port"])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}

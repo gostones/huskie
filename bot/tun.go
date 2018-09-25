@@ -26,16 +26,16 @@ func init() {
 
 // Run executes a command
 func (b TunBot) Run(c *Command) string {
-	if len(c.Args) != 2 {
-		return "missing ports: local remote"
-	}
+	// if len(c.Args) != 2 {
+	// 	return "missing ports: local remote"
+	// }
 
-	lport, err := strconv.Atoi(c.Args[0])
+	lport, err := strconv.Atoi(c.Msg["port"])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}
 
-	rport, err := strconv.Atoi(c.Args[1])
+	rport, err := strconv.Atoi(c.Msg["remote_port"])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}

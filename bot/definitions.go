@@ -13,7 +13,7 @@ type Robot interface {
 
 // Command represents the fields in a ssh-chat-bot command
 type Command struct {
-	From    string
-	Command string
-	Args    []string
+	// Command string
+	// Args    []string
+	ChatMessage
 }

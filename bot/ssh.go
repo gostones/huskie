@@ -26,11 +26,11 @@ func init() {
 
 // Run executes a command
 func (b SshBot) Run(c *Command) string {
-	if len(c.Args) == 0 {
-		return "missing port"
-	}
+	// if len(c.Args) == 0 {
+	// 	return "missing port"
+	// }
 
-	port, err := strconv.Atoi(c.Args[0])
+	port, err := strconv.Atoi(c.Msg["port"])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}

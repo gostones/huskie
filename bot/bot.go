@@ -8,19 +8,20 @@ import (
 	"golang.org/x/crypto/ssh"
 	"io"
 	"net"
-	"strings"
 	"time"
 )
 
+// ChatMessage format
 type ChatMessage struct {
-	Type    string                 `json:"type"`
-	To      string                 `json:"to"`
-	From    string                 `json:"from"`
-	Msg     string                 `json:"msg"`
-	Content map[string]interface{} `json:"content"`
+	Type string            `json:"type"`
+	To   string            `json:"to"`
+	From string            `json:"from"`
+	Msg  map[string]string `json:"msg"`
 }
 
 var active = false
+
+const maxInputLength int = 1024
 
 // Bot runs the bot
 func Bot(user string, name string, service string, addr string) error {
@@ -49,7 +50,7 @@ func Bot(user string, name string, service string, addr string) error {
 		return err
 	}
 
-	err = session.RequestPty("xterm", 80, 256, ssh.TerminalModes{})
+	err = session.RequestPty("xterm", 80, maxInputLength, ssh.TerminalModes{})
 	if err != nil {
 		return err
 	}
@@ -57,14 +58,14 @@ func Bot(user string, name string, service string, addr string) error {
 	delay := 5 * time.Second
 
 	go func() {
-		me := fmt.Sprintf(`/me "name: %v, type: %v, connect: %v, status: on"`, name, service, addr) 
+		me := fmt.Sprintf(`/me {"name": "%v", "type": "%v", "connect": "%v", "status": "on" }`, name, service, addr)
 		fmt.Println("Sending me detail: ", me)
 
 		for {
 			_, err := in.Write([]byte(me + "\r\n"))
-			
+
 			if err == nil {
-				break;
+				break
 			}
 
 			time.Sleep(delay)
@@ -89,21 +90,20 @@ func Bot(user string, name string, service string, addr string) error {
 		if err != nil {
 			return err
 		}
-		fmt.Println(line)
+		fmt.Println("Got: ", line)
 
 		cm := ChatMessage{}
 		err := json.Unmarshal([]byte(line), &cm)
 		if err != nil {
 			fmt.Printf("TODO: %v\r\n", line)
 		} else {
-			cmdline := strings.Split(cm.Msg, " ")
 			cmd := &Command{
-				From:    cm.From,
-				Command: cmdline[0],
-				Args:    cmdline[1:],
+				cm,
 			}
-
-			robot, err := getRobot(cmd.Command)
+			if cmd.Msg == nil || cmd.Msg["cmd"] == "" {
+				continue
+			}
+			robot, err := getRobot(cm.Msg["cmd"])
 			if err != nil {
 				continue
 			}
@@ -112,7 +112,18 @@ func Bot(user string, name string, service string, addr string) error {
 				continue
 			}
 
-			if response := robot.Run(cmd); response != "" {
+			execute := func() string {
+				defer func() string {
+					if r := recover(); r != nil {
+						fmt.Println("Recovered in f", r)
+						return fmt.Sprintf("%v", r)
+					}
+					return "ok"
+				}()
+				return robot.Run(cmd)
+			}
+
+			if response := execute(); response != "" {
 				//TODO check from
 				reply(in, fmt.Sprintf(`/msg %v %s`, cm.From, response))
 			}

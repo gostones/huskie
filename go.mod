@@ -19,7 +19,7 @@ require (
 	github.com/golang/snappy v0.0.0-20170215233205-553a64147049
 	github.com/gorilla/mux v1.6.2
 	github.com/gorilla/websocket v0.0.0-20170718202341-a69d9f6de432
-	github.com/gostones/ssh-chat v0.0.0-20180925005728-4df4fc1b4f5f
+	github.com/gostones/ssh-chat v0.0.0-20180925230513-7257f9e22eb9
 	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
 	github.com/jessevdk/go-flags v1.3.0
@@ -55,7 +55,7 @@ require (
 	github.com/xtaci/kcp-go v0.0.0-20180203133237-42bc1dfefff5
 	github.com/xtaci/smux v1.0.7
 	golang.org/x/crypto v0.0.0-20170825220121-81e90905daef
-	golang.org/x/net v0.0.0-20170828231752-66aacef3dd8a
+	golang.org/x/net v0.0.0-20180925072008-f04abc6bdfa7
 	golang.org/x/sys v0.0.0-20180117170059-2c42eef0765b
 	golang.org/x/text v0.3.0
 	gopkg.in/src-d/go-billy.v4 v4.1.1

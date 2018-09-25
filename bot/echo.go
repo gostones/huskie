@@ -1,6 +1,8 @@
 package bot
 
-import "strings"
+import (
+	"fmt"
+)
 
 // EchoBot is a simple echo bot
 type EchoBot struct{}
@@ -13,7 +15,7 @@ func init() {
 
 // Run executes a command
 func (b EchoBot) Run(c *Command) string {
-	return strings.Join(c.Args, " ")
+	return fmt.Sprintf("%v", c)
 }
 
 // Description describes what the robot does

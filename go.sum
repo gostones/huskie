@@ -48,6 +48,8 @@ github.com/gostones/ssh-chat v0.0.0-20180925003329-f75391522e61 h1:sVgMeEIL2kot+
 github.com/gostones/ssh-chat v0.0.0-20180925003329-f75391522e61/go.mod h1:OTA9LTkGGdW7BoNhvXUI1QATpCABjMMW+pUg0KuKifs=
 github.com/gostones/ssh-chat v0.0.0-20180925005728-4df4fc1b4f5f h1:BI6tpbeOGZxaMVMlG60gPSF6udeo85l/FeBMy54XPRc=
 github.com/gostones/ssh-chat v0.0.0-20180925005728-4df4fc1b4f5f/go.mod h1:OTA9LTkGGdW7BoNhvXUI1QATpCABjMMW+pUg0KuKifs=
+github.com/gostones/ssh-chat v0.0.0-20180925230513-7257f9e22eb9 h1:uZ3Mkku5ctZnlJ9ciaViOJ/yFHR0ED+/t28FuCaz2J4=
+github.com/gostones/ssh-chat v0.0.0-20180925230513-7257f9e22eb9/go.mod h1:OTA9LTkGGdW7BoNhvXUI1QATpCABjMMW+pUg0KuKifs=
 github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c h1:kQWxfPIHVLbgLzphqk3QUflDy9QdksZR4ygR807bpy0=
 github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c/go.mod h1:lADxMC39cJJqL93Duh1xhAs4I2Zs8mKS89XWXFGp9cs=
 github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 h1:BQSFePA1RWJOlocH6Fxy8MmwDt+yVQYULKfN0RoTN8A=
@@ -125,6 +127,8 @@ golang.org/x/crypto v0.0.0-20180411161317-d6449816ce06/go.mod h1:6SG95UA2DQfeDnf
 golang.org/x/net v0.0.0-20170828231752-66aacef3dd8a h1:DZGc/od29xzgmdBTGZL3zqLaoHS0O+qdIEYJNkOxDKM=
 golang.org/x/net v0.0.0-20170828231752-66aacef3dd8a/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/net v0.0.0-20180921000356-2f5d2388922f h1:QM2QVxvDoW9PFSPp/zy9FgxJLfaWTZlS61KEPtBwacM=
+golang.org/x/net v0.0.0-20180925072008-f04abc6bdfa7 h1:zKzVgSQ8WOSHzD7I4k8LQjrHUUCNOlBsgc0PcYLVNnY=
+golang.org/x/net v0.0.0-20180925072008-f04abc6bdfa7/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/sys v0.0.0-20180104162908-a3f2cbd54cf5 h1:6Od77Y9QsEwa/MFtLV5Oyv3/z8z7CSga7Qzdkg8VUKE=
 golang.org/x/sys v0.0.0-20180104162908-a3f2cbd54cf5/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180117170059-2c42eef0765b h1:mxo/dXmtEd5rXc/ZzMKg0qDhMT+51+LvV65S9dP6nh4=

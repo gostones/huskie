@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -30,7 +31,10 @@ func (b TunBot) Run(c *Command) string {
 	// 	return "missing ports: local remote"
 	// }
 
-	lport, err := strconv.Atoi(c.Msg["port"])
+	hostPort := strings.Split(c.Msg["host_port"], ":")
+	//lhost := hostPort[0]
+
+	lport, err := strconv.Atoi(hostPort[1])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}

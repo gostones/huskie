@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -46,9 +47,10 @@ func (b RpcBot) Run(c *Command) string {
 	// 	return "missing args: host port remote_port"
 	// }
 
-	shost := c.Msg["host"]
+	hostPort := strings.Split(c.Msg["host_port"], ":")
+	shost := hostPort[0]
 
-	sport, err := strconv.Atoi(c.Msg["port"])
+	sport, err := strconv.Atoi(hostPort[1])
 	if err != nil {
 		return fmt.Sprintf("%v", err)
 	}

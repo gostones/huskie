@@ -24,7 +24,7 @@ var active = false
 const maxInputLength int = 1024
 
 // Bot runs the bot
-func Bot(user string, name string, service string, addr string) error {
+func Bot(user string, addr string) error {
 	conn, err := dial(addr, user)
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func Bot(user string, name string, service string, addr string) error {
 	delay := 5 * time.Second
 
 	go func() {
-		me := fmt.Sprintf(`/me {"name": "%v", "type": "%v", "connect": "%v", "status": "on" }`, name, service, addr)
+		me := fmt.Sprintf(`/me {"name": "%v", "type": "bot", "addr": "%v", "status": "on" }`, user, addr)
 		fmt.Println("Sending me detail: ", me)
 
 		for {

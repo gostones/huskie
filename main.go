@@ -110,10 +110,13 @@ func harness(args []string) {
 func mush(args []string) {
 	flags := flag.NewFlagSet("connect", flag.ContinueOnError)
 
+	lport := util.FreePort()
+
 	port := flags.Int("port", parseInt(os.Getenv("HUSKIE_PORT"), huskiePort), "")
 	ident := flags.String("identity", os.Getenv("HUSKIE_IDENTITY"), "")
 	url := flags.String("url", os.Getenv("HUSKIE_URL"), "")
 	proxy := flags.String("proxy", "", "")
+	user := flags.String("name", fmt.Sprintf("mush%v", lport), "")
 
 	flags.Parse(args)
 
@@ -131,15 +134,13 @@ func mush(args []string) {
 	}
 
 	//
-	lport := util.FreePort()
-
 	fmt.Fprintf(os.Stdout, "local: %v remote: %v\n", lport, *port)
 
 	//
 	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, *port)
 	go tunnel.TunClient(*proxy, *url, remote)
 
-	args = []string{"--p", fmt.Sprintf("%v", lport), "--i", *ident, "localhost"}
+	args = []string{"--p", fmt.Sprintf("%v", lport), "--i", *ident, *user + "@localhost"}
 	sleep := util.BackoffDuration()
 	for {
 		rc := ssh.Client(args)
@@ -158,9 +159,7 @@ func puppy(args []string) {
 	port := flags.Int("port", parseInt(os.Getenv("HUSKIE_PORT"), 2022), "")
 	url := flags.String("url", os.Getenv("HUSKIE_URL"), "")
 	proxy := flags.String("proxy", os.Getenv("http_proxy"), "")
-	user := flags.String("user", fmt.Sprintf("pup%v", lport), "")
-	name := flags.String("name", "bot", "")
-	service := flags.String("type", "bot", "")
+	user := flags.String("name", fmt.Sprintf("pup%v", lport), "")
 
 	flags.Parse(args)
 
@@ -169,9 +168,7 @@ func puppy(args []string) {
 	}
 
 	//
-
 	fmt.Fprintf(os.Stdout, "local: %v user: %v\n", lport, user)
-	fmt.Fprintf(os.Stdout, "name: %v type: %v", name, service)
 
 	remote := fmt.Sprintf("localhost:%v:localhost:%v", lport, *port)
 	go tunnel.TunClient(*proxy, *url, remote)
@@ -179,7 +176,7 @@ func puppy(args []string) {
 	sleep := util.BackoffDuration()
 
 	for {
-		rc := bot.Server(*proxy, *url, *user, *name, *service, "localhost", lport)
+		rc := bot.Server(*proxy, *url, *user, "localhost", lport)
 		sleep(rc)
 	}
 }

@@ -22,7 +22,7 @@ import (
 //	check   = flag.Duration("c", 30*time.Second, "Duration between alive checks")
 //)
 
-func Server(proxy string, url string, user string, name string, service string, host string, port int) int {
+func Server(proxy string, url string, user string, host string, port int) int {
 	ProxyUrl = proxy
 	HuskieUrl = url
 
@@ -30,7 +30,7 @@ func Server(proxy string, url string, user string, name string, service string, 
 
 	addr := fmt.Sprintf("%s:%d", host, port)
 
-	if err := Bot(user, name, service, addr); err != nil {
+	if err := Bot(user, addr); err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return 1
 	}

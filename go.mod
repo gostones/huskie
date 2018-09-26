@@ -19,7 +19,7 @@ require (
 	github.com/golang/snappy v0.0.0-20170215233205-553a64147049
 	github.com/gorilla/mux v1.6.2
 	github.com/gorilla/websocket v0.0.0-20170718202341-a69d9f6de432
-	github.com/gostones/ssh-chat v0.0.0-20180926194309-dee65720ce14
+	github.com/gostones/ssh-chat v0.0.0-20180926225733-0123149817ad
 	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
 	github.com/jessevdk/go-flags v1.3.0

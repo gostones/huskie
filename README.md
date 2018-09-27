@@ -22,6 +22,7 @@ ssh:
 /link p1:p0 {"remote":"<host>:22", "local":":60022"}
 
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 60022 <user>@localhost
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -P 60022 <user>@localhost
 
 git:
 /link p1:p0 {"remote":"github.com:22", "local":":61022"}
